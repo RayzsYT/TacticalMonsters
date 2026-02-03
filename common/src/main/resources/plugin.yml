@@ -3,6 +3,8 @@ author: Rayzs_YT
 
 main: de.rayzs.tacticalmonsters.TacticalMonstersLoader
 description: Gives monsters a variety of different attacks.
+
 version: 1.0.0
+api-version: 1.13
 
 commands:
