@@ -11,7 +11,7 @@ import java.util.*;
 
 public abstract class MonsterAttack<T extends Monster> {
 
-    private final TacticalMonstersAPI api;
+    protected final TacticalMonstersAPI api;
     private final Random random;
 
     private final SchedulerTask scheduler;
@@ -195,6 +195,45 @@ public abstract class MonsterAttack<T extends Monster> {
         } catch (Exception exception) {
             api.getLogger().warning("Invalid sound name! (" + soundName + " -> " + this.getClass().getSimpleName() + ")");
         }
+    }
+
+    /**
+     * Plays a sound at the given location.
+     *
+     * @param player Player to hear the sound.
+     * @param location Location to play the sound at.
+     * @param soundName Name of the sound to play.
+     * @param volume Volume of the sound. (1.0 - 10.0)
+     * @param pitch Pitch of the sound. (0.0 - 2.0)
+     */
+    protected void sound(
+            final Player player,
+            final Location location,
+            final String soundName,
+            final float volume,
+            final float pitch
+    ) {
+
+        final World world = location.getWorld();
+        if (world == null) {
+            return;
+        }
+
+        try {
+            final Sound sound = Sound.valueOf(soundName);
+            player.playSound(location, sound, volume, pitch);
+        } catch (Exception exception) {
+            api.getLogger().warning("Invalid sound name! (" + soundName + " -> " + this.getClass().getSimpleName() + ")");
+        }
+    }
+
+    /**
+     * Plays the shield blocked sound for the given player.
+     *
+     * @param player Player to hear the sound.
+     */
+    protected void shieldBlockedSound(final Player player) {
+        sound(player, player.getLocation(), "ITEM_SHIELD_BLOCK", 1.0f, 1.0f);
     }
 
     /**
