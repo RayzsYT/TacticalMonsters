@@ -17,7 +17,7 @@ public abstract class MonsterAttack<T extends Monster> {
 
     public MonsterAttack(final EntityType type, final TacticalMonstersAPI api, final Random random) {
         this.random = random;
-        this.scheduler = api.getScheduler().createScheduler(new SchedulerTask() {
+        this.scheduler = api.getSchedulerProvider().createScheduler(new SchedulerTask() {
 
             @Override
             public void run() {
