@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"Alle Packages","u":"allpackages-index.html"},{"l":"de.rayzs.tacticalmonsters.api"},{"l":"de.rayzs.tacticalmonsters.api.attack"},{"l":"de.rayzs.tacticalmonsters.api.configuration"},{"l":"de.rayzs.tacticalmonsters.api.scheduler"}];updateSearchResults();
