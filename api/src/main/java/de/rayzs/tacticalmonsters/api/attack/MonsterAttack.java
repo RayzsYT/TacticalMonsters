@@ -14,14 +14,22 @@ public abstract class MonsterAttack<T extends Monster> {
 
     private final Random random;
     private final SchedulerTask scheduler;
-
     private final Config config;
+
+    private boolean enabled;
 
 
     public MonsterAttack(final EntityType type, final TacticalMonstersAPI api, final Random random) {
         this.config = api.getConfigProvider().getOrCreate("attacks", this.getClass().getSimpleName());
-
         this.random = random;
+
+        this.enabled = get("enabled", true);
+
+        if (!enabled) {
+            this.scheduler = null;
+            return;
+        }
+
         this.scheduler = api.getSchedulerProvider().createScheduler(new SchedulerTask() {
 
             @Override
@@ -44,7 +52,30 @@ public abstract class MonsterAttack<T extends Monster> {
         }, 20, 20 * 6);
     }
 
+    /**
+     * Is this attack instance enabled.
+     * @return Indicates whether this attack instance is enabled or not.
+     */
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    /**
+     * Should something be done based on the given percentage chance.
+     *
+     * @param percentage Chance percentage (0-100).
+     * @return Returns 'true' if the action should be performed, returns 'false' otherwise.
+     */
     protected boolean shouldDo(final int percentage) {
+
+        if (percentage <= 0) {
+            return false;
+        }
+
+        if (percentage >= 100) {
+            return true;
+        }
+
         return this.random.nextInt(100) < percentage;
     }
 
@@ -162,6 +193,10 @@ public abstract class MonsterAttack<T extends Monster> {
      * Stops the attack scheduler.
      */
     public void eliminate() {
-        this.scheduler.stop();
+        enabled = false;
+
+        if (this.scheduler != null) {
+            this.scheduler.stop();
+        }
     }
 }
