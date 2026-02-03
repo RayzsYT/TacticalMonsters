@@ -1,8 +1,10 @@
 package de.rayzs.tacticalmonsters;
 
 import de.rayzs.tacticalmonsters.api.TacticalMonsters;
+import de.rayzs.tacticalmonsters.attacks.WitherSkeletonAttack;
 import de.rayzs.tacticalmonsters.impl.TacticalMonstersImpl;
 import de.rayzs.tacticalmonsters.listener.MonsterHandler;
+import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,6 +19,9 @@ public class TacticalMonstersLoader extends JavaPlugin {
 
         final PluginManager manager = Bukkit.getServer().getPluginManager();
         manager.registerEvents(new MonsterHandler(api), api.getPlugin());
+
+
+        api.registerAttack(EntityType.WITHER_SKELETON, WitherSkeletonAttack.class);
     }
 
     @Override
