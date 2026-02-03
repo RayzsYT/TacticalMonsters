@@ -172,7 +172,7 @@ public abstract class MonsterAttack<T extends Monster> {
             final double y
     ) {
 
-        final Vector direction = pushingFrom.toVector()
+        final Vector direction = pushingTo.toVector()
                 .subtract(victim.getLocation().toVector())
                 .normalize()
                 .multiply(strength);
