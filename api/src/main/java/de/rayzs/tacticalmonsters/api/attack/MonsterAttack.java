@@ -11,7 +11,9 @@ import java.util.*;
 
 public abstract class MonsterAttack<T extends Monster> {
 
+    private final TacticalMonstersAPI api;
     private final Random random;
+
     private final SchedulerTask scheduler;
     private final Config config;
 
@@ -20,6 +22,8 @@ public abstract class MonsterAttack<T extends Monster> {
 
     public MonsterAttack(final EntityType type, final TacticalMonstersAPI api, final Random random) {
         this.config = api.getConfigProvider().getOrCreate("attacks", this.getClass().getSimpleName());
+
+        this.api = api;
         this.random = random;
 
         this.enabled = get("enabled", true);
@@ -169,13 +173,13 @@ public abstract class MonsterAttack<T extends Monster> {
      * Plays a sound at the given location.
      *
      * @param location Location to play the sound at.
-     * @param sound Sound to play.
+     * @param soundName Name of the sound to play.
      * @param volume Volume of the sound. (1.0 - 10.0)
      * @param pitch Pitch of the sound. (0.0 - 2.0)
      */
     protected void sound(
             final Location location,
-            final Sound sound,
+            final String soundName,
             final float volume,
             final float pitch
     ) {
@@ -185,7 +189,12 @@ public abstract class MonsterAttack<T extends Monster> {
             return;
         }
 
-        world.playSound(location, sound, volume, pitch);
+        try {
+            final Sound sound = Sound.valueOf(soundName);
+            world.playSound(location, sound, volume, pitch);
+        } catch (Exception exception) {
+            api.getLogger().warning("Invalid sound name! (" + soundName + " -> " + this.getClass().getSimpleName() + ")");
+        }
     }
 
     /**
