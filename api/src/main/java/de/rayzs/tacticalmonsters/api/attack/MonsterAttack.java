@@ -198,7 +198,7 @@ public abstract class MonsterAttack<T extends Monster> {
     }
 
     /**
-     * Plays a sound at the given location.
+     * Plays a sound at the given location for a certain player.
      *
      * @param player Player to hear the sound.
      * @param location Location to play the sound at.
