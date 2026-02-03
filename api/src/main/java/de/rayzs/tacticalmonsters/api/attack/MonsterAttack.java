@@ -158,6 +158,31 @@ public abstract class MonsterAttack<T extends Monster> {
     }
 
     /**
+     * Pushes the victim towards the pusher with the specified strength and vertical velocity.
+     *
+     * @param victim The entity being pushed.
+     * @param pushingFrom The location from which the push originates.
+     * @param strength The strength of the push.
+     * @param y The value the player gets pushed upwards.
+     */
+    protected void pushTowards(
+            final LivingEntity victim,
+            final Location pushingFrom,
+            final double strength,
+            final double y
+    ) {
+
+        final Vector direction = pushingFrom.toVector()
+                .subtract(victim.getLocation().toVector())
+                .normalize()
+                .multiply(strength);
+
+        direction.setY(y);
+
+        victim.setVelocity(direction);
+    }
+
+    /**
      * Determines if the player should be ignored or not.
      *
      * @param player The player to check.
