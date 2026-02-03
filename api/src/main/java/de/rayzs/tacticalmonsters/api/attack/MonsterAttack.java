@@ -1,5 +1,6 @@
 package de.rayzs.tacticalmonsters.api.attack;
 
+import de.rayzs.tacticalmonsters.api.configuration.Config;
 import de.rayzs.tacticalmonsters.api.scheduler.SchedulerTask;
 import de.rayzs.tacticalmonsters.api.TacticalMonstersAPI;
 import org.bukkit.Location;
@@ -14,8 +15,12 @@ public abstract class MonsterAttack<T extends Monster> {
     private final Random random;
     private final SchedulerTask scheduler;
 
+    private final Config config;
+
 
     public MonsterAttack(final EntityType type, final TacticalMonstersAPI api, final Random random) {
+        this.config = api.getConfigProvider().getOrCreate("attacks", this.getClass().getSimpleName());
+
         this.random = random;
         this.scheduler = api.getSchedulerProvider().createScheduler(new SchedulerTask() {
 
@@ -118,6 +123,31 @@ public abstract class MonsterAttack<T extends Monster> {
         direction.setY(y);
 
         victim.setVelocity(direction);
+    }
+
+    /**
+     * Gets a value if it exists.
+     * Returns assigned default value and sets it in the config otherwise.
+     *
+     * @param target Target key.
+     * @param value Default value.
+     * @return The existing or default value.
+     */
+    protected <S> S get(String target, S value) {
+        return this.config.getOrSet(target, value);
+    }
+
+    /**
+     * Gets a value if it exists.
+     * Returns assigned default value and sets it in the config otherwise.
+     *
+     * @param path Path to the section.
+     * @param target Target key.
+     * @param value Default value.
+     * @return The existing or default value.
+     */
+    protected <S> S get(String path, String target, S value) {
+        return this.config.getOrSet(path, target, value);
     }
 
     /**
