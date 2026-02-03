@@ -3,9 +3,8 @@ package de.rayzs.tacticalmonsters.api.attack;
 import de.rayzs.tacticalmonsters.api.configuration.Config;
 import de.rayzs.tacticalmonsters.api.scheduler.SchedulerTask;
 import de.rayzs.tacticalmonsters.api.TacticalMonstersAPI;
-import org.bukkit.Location;
+import org.bukkit.*;
 import org.bukkit.entity.*;
-import org.bukkit.GameMode;
 import org.bukkit.util.Vector;
 
 import java.util.*;
@@ -164,6 +163,106 @@ public abstract class MonsterAttack<T extends Monster> {
         return player.getGameMode() == GameMode.CREATIVE
                 || player.getGameMode() == GameMode.SPECTATOR
                 || player.isDead();
+    }
+
+    /**
+     * Plays a sound at the given location.
+     *
+     * @param location Location to play the sound at.
+     * @param sound Sound to play.
+     * @param volume Volume of the sound. (1.0 - 10.0)
+     * @param pitch Pitch of the sound. (0.0 - 2.0)
+     */
+    protected void sound(
+            final Location location,
+            final Sound sound,
+            final float volume,
+            final float pitch
+    ) {
+
+        final World world = location.getWorld();
+        if (world == null) {
+            return;
+        }
+
+        world.playSound(location, sound, volume, pitch);
+    }
+
+    /**
+     * Spawns particles at the given location.
+     *
+     * @param location Location to spawn the particles at.
+     * @param particle Particle type to spawn.
+     * @param amount Amount of particles to spawn.
+     * @param x X distribution over time.
+     * @param y Y distribution over time.
+     * @param z Z distribution over time.
+     * @param speed Speed of the particles.
+     */
+    protected void particle(
+            final Location location,
+            final Particle particle,
+            final int amount,
+            final double x,
+            final double y,
+            final double z,
+            final double speed
+    ) {
+
+        final World world = location.getWorld();
+        if (world == null) {
+            return;
+        }
+
+        world.spawnParticle(
+                particle,
+                location,
+                amount,
+                x,
+                y,
+                z,
+                speed
+        );
+    }
+
+    /**
+     * Spawns colored dust particles at the given location.
+     *
+     * @param location Location to spawn the particles at.
+     * @param color Color of the dust particles.
+     * @param size Size of the dust particles. (1 - 50)
+     * @param amount Amount of particles to spawn.
+     * @param x X distribution over time.
+     * @param y Y distribution over time.
+     * @param z Z distribution over time.
+     * @param speed Speed of the particles.
+     */
+    protected void particle(
+            final Location location,
+            final Color color,
+            final float size,
+            final int amount,
+            final double x,
+            final double y,
+            final double z,
+            final double speed
+    ) {
+
+        final World world = location.getWorld();
+        if (world == null) {
+            return;
+        }
+
+        world.spawnParticle(
+                Particle.DUST,
+                location,
+                amount,
+                x,
+                y,
+                z,
+                speed,
+                new Particle.DustOptions(color, size)
+        );
     }
 
     /**
