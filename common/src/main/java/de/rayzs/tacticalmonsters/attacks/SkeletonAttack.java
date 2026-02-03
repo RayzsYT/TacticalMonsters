@@ -49,12 +49,14 @@ public class SkeletonAttack extends MonsterAttack<Skeleton> {
 
         final AttributeInstance attribute = monster.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
         attribute.setBaseValue(attribute.getBaseValue() + 0.4);
+        monster.setGlowing(true);
 
         api.getSchedulerProvider().createScheduler(new SchedulerTask() {
 
             @Override
             public void run() {
                 attribute.setBaseValue(attribute.getDefaultValue());
+                monster.setGlowing(false);
             }
         }, 20 * 3);
 
@@ -94,6 +96,9 @@ public class SkeletonAttack extends MonsterAttack<Skeleton> {
                 }
 
                 for (final Player nearbyPlayer : nearbyPlayers) {
+                    if (shouldIgnorePlayer(nearbyPlayer)) {
+                        continue;
+                    }
 
                     if (boneItem.getLocation().distance(nearbyPlayer.getLocation()) < 1.5) {
 
