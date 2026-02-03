@@ -1,7 +1,9 @@
 package de.rayzs.tacticalmonsters.impl;
 
-import de.rayzs.tacticalmonsters.impl.bukkit.BukkitSchedulerProvider;
-import de.rayzs.tacticalmonsters.impl.folia.FoliaSchedulerProvider;
+import de.rayzs.tacticalmonsters.impl.scheduler.bukkit.BukkitSchedulerProvider;
+import de.rayzs.tacticalmonsters.impl.scheduler.folia.FoliaSchedulerProvider;
+import de.rayzs.tacticalmonsters.impl.configuration.ConfigProviderImpl;
+import de.rayzs.tacticalmonsters.api.configuration.ConfigProvider;
 import de.rayzs.tacticalmonsters.api.scheduler.SchedulerProvider;
 import de.rayzs.tacticalmonsters.api.attack.MonsterAttack;
 import de.rayzs.tacticalmonsters.api.TacticalMonstersAPI;
@@ -20,10 +22,13 @@ public class TacticalMonstersImpl implements TacticalMonstersAPI {
     private final Random random;
 
     private final SchedulerProvider schedulerProvider;
+    private final ConfigProvider configProvider;
 
     public TacticalMonstersImpl(final JavaPlugin plugin) {
         this.plugin = plugin;
         this.random = new Random();
+
+        this.configProvider = new ConfigProviderImpl();
 
 
         boolean folia = false;
@@ -87,8 +92,13 @@ public class TacticalMonstersImpl implements TacticalMonstersAPI {
     }
 
     @Override
-    public SchedulerProvider getScheduler() {
+    public SchedulerProvider getSchedulerProvider() {
         return this.schedulerProvider;
+    }
+
+    @Override
+    public ConfigProvider getConfigProvider() {
+        return this.configProvider;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package de.rayzs.tacticalmonsters.api;
 
 import de.rayzs.tacticalmonsters.api.attack.MonsterAttack;
+import de.rayzs.tacticalmonsters.api.configuration.ConfigProvider;
 import de.rayzs.tacticalmonsters.api.scheduler.SchedulerProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.entity.*;
@@ -53,7 +54,14 @@ public interface TacticalMonstersAPI {
      *
      * @return SchedulerProvider instance.
      */
-    SchedulerProvider getScheduler();
+    SchedulerProvider getSchedulerProvider();
+
+    /**
+     * Gets the ConfigurationProvider.
+     *
+     * @return ConfigurationProvider instance.
+     */
+    ConfigProvider getConfigProvider();
 
     /**
      * Gets the Logger.
