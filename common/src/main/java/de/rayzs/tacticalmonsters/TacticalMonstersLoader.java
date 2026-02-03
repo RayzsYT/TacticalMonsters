@@ -1,6 +1,7 @@
 package de.rayzs.tacticalmonsters;
 
 import de.rayzs.tacticalmonsters.api.TacticalMonsters;
+import de.rayzs.tacticalmonsters.attacks.SkeletonAttack;
 import de.rayzs.tacticalmonsters.attacks.WitherSkeletonAttack;
 import de.rayzs.tacticalmonsters.impl.TacticalMonstersImpl;
 import de.rayzs.tacticalmonsters.listener.MonsterHandler;
@@ -25,6 +26,7 @@ public class TacticalMonstersLoader extends JavaPlugin {
 
 
         api.registerAttack(EntityType.WITHER_SKELETON, WitherSkeletonAttack.class);
+        api.registerAttack(EntityType.SKELETON, SkeletonAttack.class);
     }
 
     @Override
