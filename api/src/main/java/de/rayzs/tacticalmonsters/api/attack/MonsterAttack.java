@@ -161,13 +161,13 @@ public abstract class MonsterAttack<T extends Monster> {
      * Pushes the victim towards the pusher with the specified strength and vertical velocity.
      *
      * @param victim The entity being pushed.
-     * @param pushingFrom The location from which the push originates.
+     * @param pushingTo The location to which the push is directed.
      * @param strength The strength of the push.
      * @param y The value the player gets pushed upwards.
      */
     protected void pushTowards(
             final LivingEntity victim,
-            final Location pushingFrom,
+            final Location pushingTo,
             final double strength,
             final double y
     ) {
