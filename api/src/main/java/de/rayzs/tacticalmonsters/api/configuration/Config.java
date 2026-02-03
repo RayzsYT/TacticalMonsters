@@ -22,7 +22,7 @@ public interface Config {
      * @param object Value to set.
      * @return The current Config instance.
      */
-    Config set(String path, String target, Object object);
+    Config set(final String path, final String target, final Object object);
 
     /**
      * Sets a value.
@@ -31,7 +31,7 @@ public interface Config {
      * @param object Value to set.
      * @return The current Config instance.
      */
-    Config set(String target, Object object);
+    Config set(final String target, final Object object);
 
     /**
      * Sets a value and saves the config.
@@ -41,7 +41,7 @@ public interface Config {
      * @param object Value to set.
      * @return The current Config instance.
      */
-    Config setAndSave(String path, String target, Object object);
+    Config setAndSave(final String path, final String target, final Object object);
 
     /**
      * Sets a value and saves the config.
@@ -50,7 +50,7 @@ public interface Config {
      * @param object Value to set.
      * @return The current Config instance.
      */
-    Config setAndSave(String target, Object object);
+    Config setAndSave(final String target, final Object object);
 
     /**
      * Gets a value if it exists.
@@ -61,7 +61,7 @@ public interface Config {
      * @param value Default value.
      * @return The existing or default value.
      */
-    <T> T getOrSet(String path, String target, T value);
+    <T> T getOrSet(final String path, final String target, final T value);
 
     /**
      * Gets a value if it exists.
@@ -71,7 +71,7 @@ public interface Config {
      * @param value Default value.
      * @return The existing or default value.
      */
-    <T> T getOrSet(String target, T value);
+    <T> T getOrSet(final String target, final T value);
 
     /**
      * Gets a value.
@@ -79,7 +79,7 @@ public interface Config {
      * @param target Target key.
      * @return The value.
      */
-    Object get(String target);
+    Object get(final String target);
 
     /**
      * Gets a value.
@@ -88,7 +88,7 @@ public interface Config {
      * @param target Target key.
      * @return The value.
      */
-    Object get(String path, String target);
+    Object get(final String path, final String target);
 
     /**
      * Gets all keys.
@@ -106,7 +106,7 @@ public interface Config {
      * @param deep Whether to get keys deeply.
      * @return Collection of keys.
      */
-    Collection<String> getKeys(boolean deep);
+    Collection<String> getKeys(final boolean deep);
 
     /**
      * Gets all keys from a section.
@@ -125,5 +125,5 @@ public interface Config {
      * @param deep Whether to get keys deeply.
      * @return Collection of keys.
      */
-    Collection<String> getKeys(String section, boolean deep);
+    Collection<String> getKeys(final String section, final boolean deep);
 }
