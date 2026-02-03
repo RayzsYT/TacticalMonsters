@@ -141,7 +141,7 @@ public abstract class MonsterAttack<T extends Monster> {
      * @param y The value the player gets pushed upwards.
      */
     protected void pushBack(
-            final LivingEntity victim,
+            final Entity victim,
             final Location pushingFrom,
             final double strength,
             final double y
@@ -166,7 +166,7 @@ public abstract class MonsterAttack<T extends Monster> {
      * @param y The value the player gets pushed upwards.
      */
     protected void pushTowards(
-            final LivingEntity victim,
+            final Entity victim,
             final Location pushingTo,
             final double strength,
             final double y
