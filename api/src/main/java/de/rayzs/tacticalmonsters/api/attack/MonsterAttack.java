@@ -40,9 +40,7 @@ public abstract class MonsterAttack<T extends Monster> {
                     final T monster = (T) monsterPlayerEntry.getKey();
                     final Player player = monsterPlayerEntry.getValue();
 
-                    if (player.getGameMode() == GameMode.CREATIVE
-                            || player.getGameMode() == GameMode.SPECTATOR
-                            || player.isDead()) {
+                    if (shouldIgnorePlayer(player)) {
                         continue;
                     }
 
@@ -154,6 +152,18 @@ public abstract class MonsterAttack<T extends Monster> {
         direction.setY(y);
 
         victim.setVelocity(direction);
+    }
+
+    /**
+     * Determines if the player should be ignored or not.
+     *
+     * @param player The player to check.
+     * @return Returns 'true' if the player should be ignored, returns 'false' otherwise.
+     */
+    protected boolean shouldIgnorePlayer(final Player player) {
+        return player.getGameMode() == GameMode.CREATIVE
+                || player.getGameMode() == GameMode.SPECTATOR
+                || player.isDead();
     }
 
     /**
