@@ -1,4 +1,4 @@
-package de.rayzs.tacticalmonsters.impl.bukkit;
+package de.rayzs.tacticalmonsters.impl.scheduler.bukkit;
 
 import de.rayzs.tacticalmonsters.api.scheduler.SchedulerTask;
 import org.bukkit.Bukkit;

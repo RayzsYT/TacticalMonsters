@@ -1,4 +1,4 @@
-package de.rayzs.tacticalmonsters.impl.folia;
+package de.rayzs.tacticalmonsters.impl.scheduler.folia;
 
 import de.rayzs.tacticalmonsters.api.scheduler.SchedulerTask;
 import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
