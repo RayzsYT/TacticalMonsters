@@ -55,7 +55,7 @@ public class TacticalMonstersImpl implements TacticalMonstersAPI {
     @Override
     public void registerAttack(
             final EntityType type,
-            final Class<MonsterAttack<? extends Monster>> attackClazz
+            final Class<? extends MonsterAttack<?>> attackClazz
     ) {
 
         try {
@@ -72,7 +72,7 @@ public class TacticalMonstersImpl implements TacticalMonstersAPI {
     }
 
     @Override
-    public void unregisterAttack(Class<MonsterAttack<? extends Monster>> attackClazz) {
+    public void unregisterAttack(Class<? extends MonsterAttack<?>> attackClazz) {
         this.attacks.removeIf(attack -> {
             if (attack.getClass().equals(attackClazz)) {
                 attack.eliminate();

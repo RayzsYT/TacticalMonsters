@@ -34,7 +34,7 @@ public interface TacticalMonstersAPI {
      */
     void registerAttack(
             final EntityType type,
-            final Class<MonsterAttack<? extends Monster>> attackClazz
+            final Class<? extends MonsterAttack<?>> attackClazz
     );
 
     /**
@@ -42,7 +42,7 @@ public interface TacticalMonstersAPI {
      *
      * @param attackClazz Class of the MonsterAttack to unregister.
      */
-    void unregisterAttack(final Class<MonsterAttack<? extends Monster>> attackClazz);
+    void unregisterAttack(final Class<? extends MonsterAttack<?>> attackClazz);
 
     /**
      * Unregisters all registered MonsterAttacks.
