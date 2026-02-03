@@ -36,3 +36,9 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Compiled ###
+common/target/*
+common/dependency-reduced-pom.xml
+api/target/*
+api/dependency-reduced-pom.xml
