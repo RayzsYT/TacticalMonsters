@@ -66,6 +66,7 @@
                             </artifactSet>
 
                             <createDependencyReducedPom>true</createDependencyReducedPom>
+                            <finalName>TacticalMonsters</finalName>
 
                         </configuration>
                     </execution>
