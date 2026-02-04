@@ -110,7 +110,6 @@ public class TacticalMonstersImpl implements TacticalMonstersAPI {
     @Override
     public void reload() {
         HandlerList.unregisterAll(plugin);
-        unregisterAllAttacks();
 
         final PluginManager manager = Bukkit.getServer().getPluginManager();
         manager.registerEvents(new MonsterHandler(this), plugin);
