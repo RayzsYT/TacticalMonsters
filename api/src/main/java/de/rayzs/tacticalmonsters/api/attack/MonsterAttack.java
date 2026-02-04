@@ -12,7 +12,7 @@ import java.util.*;
 public abstract class MonsterAttack<T extends Monster> {
 
     protected final TacticalMonstersAPI api;
-    private final Random random;
+    protected final Random random;
 
     private final SchedulerTask scheduler;
     private final Config config;
