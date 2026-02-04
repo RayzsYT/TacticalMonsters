@@ -21,6 +21,8 @@ public class ConfigImpl implements Config {
 
         final String defaultPath = "plugins/TacticalMonsters";
         this.filePath = defaultPath + (filePath == null ? "" : "/" + filePath);
+
+        load();
     }
 
     private void load() {
