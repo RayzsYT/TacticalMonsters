@@ -1,12 +1,12 @@
 package de.rayzs.tacticalmonsters.api;
 
-import de.rayzs.tacticalmonsters.api.attack.MonsterAttack;
 import de.rayzs.tacticalmonsters.api.configuration.ConfigProvider;
 import de.rayzs.tacticalmonsters.api.scheduler.SchedulerProvider;
+import de.rayzs.tacticalmonsters.api.attack.MonsterAttack;
 import org.bukkit.plugin.java.JavaPlugin;
+import java.util.logging.Logger;
 import org.bukkit.entity.*;
 import java.util.*;
-import java.util.logging.Logger;
 
 public interface TacticalMonstersAPI {
 

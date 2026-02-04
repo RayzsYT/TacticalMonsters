@@ -1,8 +1,7 @@
 package de.rayzs.tacticalmonsters.impl.configuration;
 
 import de.rayzs.tacticalmonsters.api.configuration.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ConfigProviderImpl implements ConfigProvider {
 

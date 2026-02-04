@@ -1,12 +1,11 @@
 package de.rayzs.tacticalmonsters.api.attack;
 
-import de.rayzs.tacticalmonsters.api.configuration.Config;
 import de.rayzs.tacticalmonsters.api.scheduler.SchedulerTask;
 import de.rayzs.tacticalmonsters.api.TacticalMonstersAPI;
-import org.bukkit.*;
-import org.bukkit.entity.*;
+import de.rayzs.tacticalmonsters.api.configuration.Config;
 import org.bukkit.util.Vector;
-
+import org.bukkit.entity.*;
+import org.bukkit.*;
 import java.util.*;
 
 public abstract class MonsterAttack<T extends Monster> {

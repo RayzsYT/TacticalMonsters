@@ -1,18 +1,11 @@
 package de.rayzs.tacticalmonsters.attacks;
 
-import de.rayzs.tacticalmonsters.api.TacticalMonstersAPI;
-import de.rayzs.tacticalmonsters.api.attack.MonsterAttack;
 import de.rayzs.tacticalmonsters.api.scheduler.SchedulerTask;
-import org.bukkit.Location;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
-import org.bukkit.block.data.type.Bed;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Zombie;
-
+import de.rayzs.tacticalmonsters.api.attack.MonsterAttack;
+import de.rayzs.tacticalmonsters.api.TacticalMonstersAPI;
+import org.bukkit.entity.*;
 import java.util.Random;
+import org.bukkit.*;
 
 public class ZombieAttack extends MonsterAttack<Zombie> {
 
@@ -22,7 +15,9 @@ public class ZombieAttack extends MonsterAttack<Zombie> {
 
     @Override
     public void attack(Zombie monster, org.bukkit.entity.Player player) {
-
+        if (stompAttack(monster, player)) {
+            return;
+        }
     }
 
 

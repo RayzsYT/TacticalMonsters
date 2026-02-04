@@ -3,19 +3,19 @@ package de.rayzs.tacticalmonsters.impl;
 import de.rayzs.tacticalmonsters.impl.scheduler.bukkit.BukkitSchedulerProvider;
 import de.rayzs.tacticalmonsters.impl.scheduler.folia.FoliaSchedulerProvider;
 import de.rayzs.tacticalmonsters.impl.configuration.ConfigProviderImpl;
+import de.rayzs.tacticalmonsters.listener.AntiWitherCheeseHandler;
 import de.rayzs.tacticalmonsters.api.configuration.ConfigProvider;
 import de.rayzs.tacticalmonsters.api.scheduler.SchedulerProvider;
 import de.rayzs.tacticalmonsters.api.attack.MonsterAttack;
 import de.rayzs.tacticalmonsters.api.TacticalMonstersAPI;
-import de.rayzs.tacticalmonsters.listener.AntiWitherCheeseHandler;
 import de.rayzs.tacticalmonsters.listener.MonsterHandler;
-import org.bukkit.Bukkit;
-import org.bukkit.event.HandlerList;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.PluginManager;
 import java.lang.reflect.Constructor;
+import org.bukkit.event.HandlerList;
 import java.util.logging.Logger;
 import org.bukkit.entity.*;
+import org.bukkit.Bukkit;
 import java.util.*;
 
 public class TacticalMonstersImpl implements TacticalMonstersAPI {

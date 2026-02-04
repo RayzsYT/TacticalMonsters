@@ -1,20 +1,12 @@
 package de.rayzs.tacticalmonsters.listener;
 
-import de.rayzs.tacticalmonsters.api.TacticalMonstersAPI;
 import de.rayzs.tacticalmonsters.api.configuration.Config;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.World;
+import de.rayzs.tacticalmonsters.api.TacticalMonstersAPI;
+import org.bukkit.event.entity.*;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityChangeBlockEvent;
-import org.bukkit.event.entity.EntityExplodeEvent;
-import org.bukkit.event.entity.EntityTeleportEvent;
+import org.bukkit.entity.*;
+import org.bukkit.event.*;
+import org.bukkit.*;
 
 public class AntiWitherCheeseHandler implements Listener {
 

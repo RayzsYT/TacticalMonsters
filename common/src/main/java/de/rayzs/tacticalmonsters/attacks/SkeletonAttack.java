@@ -1,19 +1,14 @@
 package de.rayzs.tacticalmonsters.attacks;
 
-import de.rayzs.tacticalmonsters.api.TacticalMonstersAPI;
-import de.rayzs.tacticalmonsters.api.attack.MonsterAttack;
 import de.rayzs.tacticalmonsters.api.scheduler.SchedulerTask;
-import org.bukkit.Color;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.attribute.AttributeInstance;
-import org.bukkit.entity.*;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.List;
-import java.util.Random;
+import de.rayzs.tacticalmonsters.api.attack.MonsterAttack;
+import de.rayzs.tacticalmonsters.api.TacticalMonstersAPI;
 import java.util.concurrent.atomic.AtomicBoolean;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.attribute.*;
+import org.bukkit.entity.*;
+import org.bukkit.*;
+import java.util.*;
 
 public class SkeletonAttack extends MonsterAttack<Skeleton> {
 

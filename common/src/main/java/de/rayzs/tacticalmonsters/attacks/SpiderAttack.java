@@ -1,16 +1,11 @@
 package de.rayzs.tacticalmonsters.attacks;
 
-import de.rayzs.tacticalmonsters.api.TacticalMonstersAPI;
-import de.rayzs.tacticalmonsters.api.attack.MonsterAttack;
 import de.rayzs.tacticalmonsters.api.scheduler.SchedulerTask;
-import org.bukkit.Location;
-import org.bukkit.Sound;
+import de.rayzs.tacticalmonsters.api.attack.MonsterAttack;
+import de.rayzs.tacticalmonsters.api.TacticalMonstersAPI;
 import org.bukkit.block.Block;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Spider;
-import org.bukkit.entity.Zombie;
-
+import org.bukkit.Location;
+import org.bukkit.entity.*;
 import java.util.*;
 
 public class SpiderAttack extends MonsterAttack<Spider> {

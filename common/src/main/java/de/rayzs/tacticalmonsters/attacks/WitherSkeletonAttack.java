@@ -1,15 +1,12 @@
 package de.rayzs.tacticalmonsters.attacks;
 
-import de.rayzs.tacticalmonsters.api.TacticalMonstersAPI;
-import de.rayzs.tacticalmonsters.api.attack.MonsterAttack;
 import de.rayzs.tacticalmonsters.api.scheduler.SchedulerTask;
-import org.bukkit.Color;
-import org.bukkit.Location;
-import org.bukkit.Particle;
-import org.bukkit.entity.*;
+import de.rayzs.tacticalmonsters.api.attack.MonsterAttack;
+import de.rayzs.tacticalmonsters.api.TacticalMonstersAPI;
 import org.bukkit.util.Vector;
-
+import org.bukkit.entity.*;
 import java.util.Random;
+import org.bukkit.*;
 
 public class WitherSkeletonAttack extends MonsterAttack<WitherSkeleton> {
 

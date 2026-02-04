@@ -1,10 +1,9 @@
 package de.rayzs.tacticalmonsters.attacks;
 
-import de.rayzs.tacticalmonsters.api.TacticalMonstersAPI;
 import de.rayzs.tacticalmonsters.api.attack.MonsterAttack;
+import de.rayzs.tacticalmonsters.api.TacticalMonstersAPI;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Zombie;
-
 import java.util.Random;
 
 public class TemplateAttack extends MonsterAttack<Zombie> implements ManualRegistration {
