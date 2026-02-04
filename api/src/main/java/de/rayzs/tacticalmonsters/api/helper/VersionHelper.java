@@ -8,7 +8,7 @@ public class VersionHelper {
     private static final Map<Version, Integer> VERSION_MAP = new HashMap<>();
     private static final Version CURRENT_VERSION;
 
-    public static final Version MIN_SUPPORTED_VERSION = Version.values()[2];
+    public static final Version MIN_SUPPORTED_VERSION = Version.values()[1];
 
     static {
         final Version[] versions = Version.values();
@@ -25,7 +25,7 @@ public class VersionHelper {
         try {
             version = Version.valueOf("V" + serverVersion);
         } catch (Exception exception) {
-            version = Version.UNKNOWN;
+            version = Version.UNSUPPORTED;
         }
 
         CURRENT_VERSION = version;
@@ -69,7 +69,7 @@ public class VersionHelper {
     }
 
     public enum Version {
-        UNKNOWN, UNSUPPORTED,
+        UNSUPPORTED,
         V1_21_1,
         V1_21_2,
         V1_21_3,
