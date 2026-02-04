@@ -74,9 +74,9 @@ public class TacticalMonstersImpl implements TacticalMonstersAPI {
 
 
             if (monsterAttack.isEnabled()) {
-                getLogger().info("Registered attack "
+                getLogger().info("Registered "
                         + attackClazz.getSimpleName()
-                        + " for monster type " + monsterAttack.getEntityType().name());
+                        + " for " + monsterAttack.getEntityType().name());
             }
 
         } catch (Exception exception) { exception.printStackTrace(); }
