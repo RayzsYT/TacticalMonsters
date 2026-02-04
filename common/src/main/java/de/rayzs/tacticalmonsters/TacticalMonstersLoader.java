@@ -7,6 +7,7 @@ import de.rayzs.tacticalmonsters.attacks.SpiderAttack;
 import de.rayzs.tacticalmonsters.attacks.WitherSkeletonAttack;
 import de.rayzs.tacticalmonsters.attacks.ZombieAttack;
 import de.rayzs.tacticalmonsters.impl.TacticalMonstersImpl;
+import de.rayzs.tacticalmonsters.listener.AntiWitherCheeseHandler;
 import de.rayzs.tacticalmonsters.listener.MonsterHandler;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.HandlerList;
@@ -34,6 +35,7 @@ public class TacticalMonstersLoader extends JavaPlugin {
 
         final PluginManager manager = Bukkit.getServer().getPluginManager();
         manager.registerEvents(new MonsterHandler(api), api.getPlugin());
+        manager.registerEvents(new AntiWitherCheeseHandler(api), api.getPlugin());
 
 
         api.registerAttack(EntityType.WITHER_SKELETON, WitherSkeletonAttack.class);
