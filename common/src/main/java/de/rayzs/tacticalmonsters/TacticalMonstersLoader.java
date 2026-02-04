@@ -1,14 +1,13 @@
 package de.rayzs.tacticalmonsters;
 
-import de.rayzs.tacticalmonsters.attacks.WitherSkeletonAttack;
+import com.google.common.reflect.ClassPath;
+import de.rayzs.tacticalmonsters.api.attack.MonsterAttack;
 import de.rayzs.tacticalmonsters.commands.ReloadCommand;
 import de.rayzs.tacticalmonsters.impl.TacticalMonstersImpl;
 import de.rayzs.tacticalmonsters.api.helper.VersionHelper;
-import de.rayzs.tacticalmonsters.attacks.SkeletonAttack;
-import de.rayzs.tacticalmonsters.attacks.SpiderAttack;
-import de.rayzs.tacticalmonsters.attacks.ZombieAttack;
 import de.rayzs.tacticalmonsters.api.TacticalMonsters;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.entity.Monster;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.event.HandlerList;
 
@@ -34,18 +33,25 @@ public class TacticalMonstersLoader extends JavaPlugin {
             pluginCommand.setTabCompleter(new ReloadCommand(api));
         }
 
-
         api.reload();
-
-        api.registerAttack(WitherSkeletonAttack.class);
-        api.registerAttack(SkeletonAttack.class);
-        api.registerAttack(ZombieAttack.class);
-        api.registerAttack(SpiderAttack.class);
+        registerAllClasses("de.rayzs.tacticalmonsters.attacks");
     }
 
     @Override
     public void onDisable() {
         HandlerList.unregisterAll(this);
         api.unregisterAllAttacks();
+    }
+
+    private void registerAllClasses(final String packagePath) {
+        try {
+            final ClassPath classPath = ClassPath.from(TacticalMonstersLoader.class.getClassLoader());
+            for (final ClassPath.ClassInfo topLevelClass : classPath.getTopLevelClasses(packagePath)) {
+                final Class<MonsterAttack <? extends Monster>> monsterAttackClazz = (Class<MonsterAttack <? extends Monster>>) Class.forName(topLevelClass.getName());
+                api.registerAttack(monsterAttackClazz);
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
 }
