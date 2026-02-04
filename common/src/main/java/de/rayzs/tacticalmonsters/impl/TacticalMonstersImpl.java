@@ -60,10 +60,10 @@ public class TacticalMonstersImpl implements TacticalMonstersAPI {
 
         try {
             final Constructor<?> constructor = attackClazz.getDeclaredConstructor(
-                    TacticalMonstersAPI.class, EntityType.class, Random.class
+                    TacticalMonstersAPI.class, Random.class
             );
 
-            final Object monsterAttackObj = constructor.newInstance(this, type, random);
+            final Object monsterAttackObj = constructor.newInstance(this, random);
             final MonsterAttack<? extends Monster> monsterAttack = (MonsterAttack<Monster>) monsterAttackObj;
 
             this.attacks.add(monsterAttack);
