@@ -13,7 +13,7 @@ import java.util.Random;
 
 public class WitherSkeletonAttack extends MonsterAttack<WitherSkeleton> {
 
-    public WitherSkeletonAttack(TacticalMonstersAPI api, Random random) {
+    public WitherSkeletonAttack(final TacticalMonstersAPI api, final Random random) {
         super(EntityType.WITHER_SKELETON, api, random);
     }
 
@@ -32,7 +32,7 @@ public class WitherSkeletonAttack extends MonsterAttack<WitherSkeleton> {
 
 
     private final boolean SHADOW_ENABLED = get("shadow.enabled", true);
-    private final int SHADOW_CHANCE = get("shadow.chance", 20);
+    private final int SHADOW_CHANCE = get("shadow.chance", 30);
 
     private boolean shadowAttack(final WitherSkeleton monster, final Player player) {
         if (!SHADOW_ENABLED || !shouldDo(SHADOW_CHANCE)) {
@@ -98,7 +98,7 @@ public class WitherSkeletonAttack extends MonsterAttack<WitherSkeleton> {
 
 
     private final boolean PUSH_ENABLED = get("push.enabled", true);
-    private final int PUSH_CHANCE = get("push.chance", 20);
+    private final int PUSH_CHANCE = get("push.chance", 15);
 
     private final double PUSH_RADIUS = get("push.radius", 4);
     private final float PUSH_DAMAGE = get("push.damage", 0.4f);

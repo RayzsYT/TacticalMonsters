@@ -22,18 +22,18 @@ public class SkeletonAttack extends MonsterAttack<Skeleton> {
     @Override
     public void attack(Skeleton monster, org.bukkit.entity.Player player) {
 
-        if (swordAttack(monster, player)) {
+        if (throwBoneAttack(monster, player)) {
             return;
         }
 
-        if (throwBoneAttack(monster, player)) {
+        if (swordAttack(monster, player)) {
             return;
         }
     }
 
 
     private final boolean SWORD_ENABLED = get("sword.enabled", true);
-    private final int SWORD_CHANCE = get("sword.chance", 30);
+    private final int SWORD_CHANCE = get("sword.chance", 40);
 
     private boolean swordAttack(final Skeleton monster, final Player player) {
         if (!SWORD_ENABLED || !shouldDo(SWORD_CHANCE)) {
