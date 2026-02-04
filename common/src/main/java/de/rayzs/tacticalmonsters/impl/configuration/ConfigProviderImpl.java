@@ -9,7 +9,12 @@ public class ConfigProviderImpl implements ConfigProvider {
     private final Map<String, Config> configs = new HashMap<>();
 
     @Override
-    public Config getOrCreate(String filePath, String fileName) {
+    public Config getOrCreate(final String fileName) {
+        return getOrCreate(null, fileName);
+    }
+
+    @Override
+    public Config getOrCreate(final String filePath, final String fileName) {
         final String id = ((filePath != null) ? (filePath + "/") : "") + fileName;
 
         Config config = configs.get(id);
