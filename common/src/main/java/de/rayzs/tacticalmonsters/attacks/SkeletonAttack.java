@@ -40,6 +40,10 @@ public class SkeletonAttack extends MonsterAttack<Skeleton> {
             return false;
         }
 
+        monster.getEquipment().setItemInOffHand(
+                monster.getEquipment().getItemInMainHand()
+        );
+
         monster.getEquipment().setItemInMainHand(
                 new ItemStack(Material.WOODEN_SWORD, 1)
         );
@@ -48,14 +52,25 @@ public class SkeletonAttack extends MonsterAttack<Skeleton> {
         sound(monster.getLocation(), "ITEM_ARMOR_EQUIP_LEATHER", 1, 2);
 
         final AttributeInstance attribute = monster.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
-        attribute.setBaseValue(attribute.getBaseValue() + 0.4);
+        final double defaultValue = attribute.getValue();
+        attribute.setBaseValue(defaultValue + 0.1);
+
         monster.setGlowing(true);
 
         api.getSchedulerProvider().createScheduler(new SchedulerTask() {
 
             @Override
             public void run() {
-                attribute.setBaseValue(attribute.getDefaultValue());
+
+                monster.getEquipment().setItemInMainHand(
+                        monster.getEquipment().getItemInOffHand()
+                );
+
+                monster.getEquipment().setItemInOffHand(
+                        null
+                );
+
+                attribute.setBaseValue(defaultValue);
                 monster.setGlowing(false);
             }
         }, 20 * 3);
