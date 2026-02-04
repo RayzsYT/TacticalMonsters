@@ -45,6 +45,13 @@ public interface TacticalMonstersAPI {
     void unregisterAttack(final Class<? extends MonsterAttack<?>> attackClazz);
 
     /**
+     * Creates an unmodifiable copy of all registered MonsterAttacks.
+     *
+     * @return Set of all current registered MonsterAttack instances.
+     */
+    Set<MonsterAttack<? extends Monster>> getRegisteredAttacks();
+
+    /**
      * Unregisters all registered MonsterAttacks.
      */
     void unregisterAllAttacks();
