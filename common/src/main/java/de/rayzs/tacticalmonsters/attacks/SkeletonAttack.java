@@ -3,6 +3,7 @@ package de.rayzs.tacticalmonsters.attacks;
 import de.rayzs.tacticalmonsters.api.TacticalMonstersAPI;
 import de.rayzs.tacticalmonsters.api.attack.MonsterAttack;
 import de.rayzs.tacticalmonsters.api.scheduler.SchedulerTask;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -12,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SkeletonAttack extends MonsterAttack<Skeleton> {
 
@@ -57,10 +59,34 @@ public class SkeletonAttack extends MonsterAttack<Skeleton> {
 
         monster.setGlowing(true);
 
+        final AtomicBoolean running = new AtomicBoolean(true);
+
         api.getSchedulerProvider().createScheduler(new SchedulerTask() {
 
             @Override
             public void run() {
+                if (monster.isDead() || !running.get()) {
+                    stop();
+                    return;
+                }
+
+                particle(monster.getLocation().clone().add(0, 1, 0),
+                        Color.WHITE, 1,10,
+                        0.2, 0.5, 0.2, 0.05
+                );
+            }
+        }, 1, 1);
+
+        api.getSchedulerProvider().createScheduler(new SchedulerTask() {
+
+            @Override
+            public void run() {
+
+                running.set(false);
+
+                if (monster.isDead()) {
+                    return;
+                }
 
                 monster.getEquipment().setItemInMainHand(
                         monster.getEquipment().getItemInOffHand()
