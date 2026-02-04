@@ -104,7 +104,7 @@ public abstract class MonsterAttack<T extends Monster> {
             final LivingEntity victim,
             final Monster monster,
             final float hurtAnimation,
-            final float damage
+            final double damage
     ) {
 
         if (victim.isDead()) {
