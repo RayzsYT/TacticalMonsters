@@ -36,6 +36,27 @@ public class ZombieAttack extends MonsterAttack<Zombie> {
             return false;
         }
 
+
+        sound(monster.getLocation(),
+                "ENTITY_ZOMBIE_ATTACK_WOODEN_DOOR",
+                1.0f,
+                0.8f
+        );
+
+        sound(monster.getLocation(),
+                "ENTITY_BREEZE_WIND_BURST",
+                1.0f,
+                0.8f
+        );
+
+        particle(monster.getLocation(),
+                Particle.CLOUD,
+                10,
+                0.5, 0.5, 0.5,
+                0.1
+        );
+
+
         final double originY = monster.getLocation().getY();
         final double goalY = originY + 4;
 
