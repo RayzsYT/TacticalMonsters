@@ -127,6 +127,8 @@ public class SkeletonAttack extends MonsterAttack<Skeleton> {
             @Override
             public void run() {
                 if (tick > 100 || boneItem.isDead() || boneItem.isOnGround()) {
+                    boneItem.remove();
+
                     stop();
                     return;
                 }
