@@ -20,9 +20,9 @@ public abstract class MonsterAttack<T extends Monster> {
     private boolean enabled;
 
 
-    public MonsterAttack(final EntityType type, final TacticalMonstersAPI api, final Config config, final Random random) {
+    public MonsterAttack(final EntityType type, final TacticalMonstersAPI api, final Random random) {
         this.api = api;
-        this.config = config;
+        this.config = api.getConfigProvider().getOrCreate("monsters", type.name().toLowerCase());
         this.random = random;
 
         this.enabled = get("enabled", true);
