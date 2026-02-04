@@ -29,11 +29,18 @@ public class SpiderAttack extends MonsterAttack<Spider> {
 
     private final boolean WEB_ENABLED = get("web.enabled", true);
     private final int WEB_CHANCE = get("web.chance", 30);
+    private final int WEB_TARGET_DISTANCE = get("web.distance", 3);
 
     private boolean webAttack(final Spider monster, final Player player) {
         if (!WEB_ENABLED || !shouldDo(WEB_CHANCE)) {
             return false;
         }
+
+        final double distance = player.getLocation().distance(monster.getLocation());
+        if (distance > WEB_TARGET_DISTANCE) {
+            return false;
+        }
+
 
         final int times = random.nextInt(5);
 
