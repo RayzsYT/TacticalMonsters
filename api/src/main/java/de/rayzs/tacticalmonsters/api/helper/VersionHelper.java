@@ -17,7 +17,9 @@ public class VersionHelper {
             VERSION_MAP.put(version, convertIntoVal(version.name()));
         }
 
-        final String serverVersion = Bukkit.getBukkitVersion().split("-")[0];
+        final String serverVersion = Bukkit.getBukkitVersion()
+                .split("-")[0]
+                .replace(".", "_");
 
         Version version;
         try {
