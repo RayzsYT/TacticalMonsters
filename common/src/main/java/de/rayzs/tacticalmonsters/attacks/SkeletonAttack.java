@@ -53,7 +53,7 @@ public class SkeletonAttack extends MonsterAttack<Skeleton> {
 
         final AttributeInstance attribute = monster.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
         final double defaultValue = attribute.getValue();
-        attribute.setBaseValue(defaultValue + 0.1);
+        attribute.setBaseValue(defaultValue + 0.05);
 
         monster.setGlowing(true);
 
