@@ -101,7 +101,7 @@ public class WitherSkeletonAttack extends MonsterAttack<WitherSkeleton> {
     private final int PUSH_CHANCE = get("push.chance", 15);
 
     private final double PUSH_RADIUS = get("push.radius", 4);
-    private final float PUSH_DAMAGE = get("push.damage", 0.4f);
+    private final double PUSH_DAMAGE = get("push.damage", 0.4f);
 
     private boolean pushAttack(final WitherSkeleton monster, final Player player) {
         if (!PUSH_ENABLED || !shouldDo(PUSH_CHANCE)) {
