@@ -7,6 +7,11 @@ import de.rayzs.tacticalmonsters.api.configuration.ConfigProvider;
 import de.rayzs.tacticalmonsters.api.scheduler.SchedulerProvider;
 import de.rayzs.tacticalmonsters.api.attack.MonsterAttack;
 import de.rayzs.tacticalmonsters.api.TacticalMonstersAPI;
+import de.rayzs.tacticalmonsters.listener.AntiWitherCheeseHandler;
+import de.rayzs.tacticalmonsters.listener.MonsterHandler;
+import org.bukkit.Bukkit;
+import org.bukkit.event.HandlerList;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.lang.reflect.Constructor;
 import java.util.logging.Logger;
@@ -54,7 +59,6 @@ public class TacticalMonstersImpl implements TacticalMonstersAPI {
 
     @Override
     public void registerAttack(
-            final EntityType type,
             final Class<? extends MonsterAttack<?>> attackClazz
     ) {
 
@@ -67,6 +71,13 @@ public class TacticalMonstersImpl implements TacticalMonstersAPI {
             final MonsterAttack<? extends Monster> monsterAttack = (MonsterAttack<Monster>) monsterAttackObj;
 
             this.attacks.add(monsterAttack);
+
+
+            if (monsterAttack.isEnabled()) {
+                getLogger().info("Registered attack "
+                        + attackClazz.getSimpleName()
+                        + " for monster type " + monsterAttack.getEntityType().name());
+            }
 
         } catch (Exception exception) { exception.printStackTrace(); }
     }
@@ -94,6 +105,33 @@ public class TacticalMonstersImpl implements TacticalMonstersAPI {
             attack.eliminate();
             return true;
         });
+    }
+
+    @Override
+    public void reload() {
+        HandlerList.unregisterAll(plugin);
+        unregisterAllAttacks();
+
+        final PluginManager manager = Bukkit.getServer().getPluginManager();
+        manager.registerEvents(new MonsterHandler(this), plugin);
+        manager.registerEvents(new AntiWitherCheeseHandler(this), plugin);
+
+
+        if (getRegisteredAttacks().isEmpty()) {
+            return;
+        }
+
+
+        final HashSet<Class<MonsterAttack<? extends Monster>>> attackClasses = new HashSet<>();
+
+        for (MonsterAttack<? extends Monster> attack : getRegisteredAttacks()) {
+            final Class<MonsterAttack<? extends Monster>> attackClass = (Class<MonsterAttack<? extends Monster>>) attack.getClass();
+            attackClasses.add(attackClass);
+        }
+
+        unregisterAllAttacks();
+
+        attackClasses.forEach(this::registerAttack);
     }
 
     @Override

@@ -16,7 +16,9 @@ public interface TacticalMonstersAPI {
      * @param entityType EntityType of the monsters.
      * @return Map of monsters targeting players.
      */
-    Map<Monster, Player> getMonsters(final EntityType entityType);
+    Map<Monster, Player> getMonsters(
+            final EntityType entityType
+    );
 
     /**
      * Updates the internal monster map for the given EntityType.
@@ -24,7 +26,10 @@ public interface TacticalMonstersAPI {
      * @param entityType EntityType of the monsters.
      * @param monsters Bew Nap of monsters targeting players.
      */
-    void updateMonsters(final EntityType entityType, Map<Monster, Player> monsters);
+    void updateMonsters(
+            final EntityType entityType,
+            Map<Monster, Player> monsters
+    );
 
     /**
      * Registers a new MonsterAttack for the given EntityType.
@@ -33,7 +38,6 @@ public interface TacticalMonstersAPI {
      * @param attackClazz Class of the MonsterAttack to register.
      */
     void registerAttack(
-            final EntityType type,
             final Class<? extends MonsterAttack<?>> attackClazz
     );
 
@@ -42,7 +46,9 @@ public interface TacticalMonstersAPI {
      *
      * @param attackClazz Class of the MonsterAttack to unregister.
      */
-    void unregisterAttack(final Class<? extends MonsterAttack<?>> attackClazz);
+    void unregisterAttack(
+            final Class<? extends MonsterAttack<?>> attackClazz
+    );
 
     /**
      * Creates an unmodifiable copy of all registered MonsterAttacks.
@@ -55,6 +61,11 @@ public interface TacticalMonstersAPI {
      * Unregisters all registered MonsterAttacks.
      */
     void unregisterAllAttacks();
+
+    /**
+     * Reloads all attack instances and configurations.
+     */
+    void reload();
 
     /**
      * Gets the SchedulerProvider.
