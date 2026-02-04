@@ -17,6 +17,8 @@ public abstract class MonsterAttack<T extends Monster> {
     private final SchedulerTask scheduler;
     private final Config config;
 
+    private final EntityType type;
+
     private boolean enabled;
 
 
@@ -25,6 +27,7 @@ public abstract class MonsterAttack<T extends Monster> {
             final TacticalMonstersAPI api,
             final Random random
     ) {
+        this.type = type;
 
         this.api = api;
         this.config = api.getConfigProvider().getOrCreate("monsters", type.name().toLowerCase());
@@ -375,6 +378,15 @@ public abstract class MonsterAttack<T extends Monster> {
      * @param player The player being attacked.
      */
     public abstract void attack(final T monster, final Player player);
+
+    /**
+     * Gets the entity type this attack is associated with.
+     *
+     * @return The entity type.
+     */
+    public EntityType getEntityType() {
+        return type;
+    }
 
     /**
      * Stops the attack scheduler.
