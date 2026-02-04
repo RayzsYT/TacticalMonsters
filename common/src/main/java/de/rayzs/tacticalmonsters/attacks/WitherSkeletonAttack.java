@@ -104,7 +104,7 @@ public class WitherSkeletonAttack extends MonsterAttack<WitherSkeleton> {
     private final double PUSH_DAMAGE = get("push.damage", 0.4);
 
     private boolean pushAttack(final WitherSkeleton monster, final Player player) {
-        if (!PUSH_ENABLED || !shouldDo(PUSH_CHANCE)) {
+        if (!PUSH_ENABLED || !shouldDo(PUSH_CHANCE) || monster.isInsideVehicle()) {
             return false;
         }
 

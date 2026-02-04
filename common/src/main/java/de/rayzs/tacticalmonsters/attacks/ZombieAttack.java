@@ -32,7 +32,7 @@ public class ZombieAttack extends MonsterAttack<Zombie> {
     private final double STOMP_DAMAGE = get("attack.damage", 4.0);
 
     public boolean stompAttack(final Zombie monster, final Player player) {
-        if (!STOMP_ENABLED || !shouldDo(STOMP_CHANCE)) {
+        if (!STOMP_ENABLED || !shouldDo(STOMP_CHANCE) || monster.isInsideVehicle()) {
             return false;
         }
 
