@@ -74,9 +74,14 @@ public class TacticalMonstersImpl implements TacticalMonstersAPI {
 
 
             if (monsterAttack.isEnabled()) {
+
+                final String entityName = monsterAttack.getEntityType().name()
+                        .replace("_", " ")
+                        .toLowerCase();
+
                 getLogger().info("Registered "
                         + attackClazz.getSimpleName()
-                        + " for " + monsterAttack.getEntityType().name());
+                        + " for " + entityName);
             }
 
         } catch (Exception exception) { exception.printStackTrace(); }
