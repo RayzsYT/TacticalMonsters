@@ -2,6 +2,7 @@ package de.rayzs.tacticalmonsters;
 
 import com.google.common.reflect.ClassPath;
 import de.rayzs.tacticalmonsters.api.attack.MonsterAttack;
+import de.rayzs.tacticalmonsters.attacks.ManualRegistration;
 import de.rayzs.tacticalmonsters.commands.ReloadCommand;
 import de.rayzs.tacticalmonsters.impl.TacticalMonstersImpl;
 import de.rayzs.tacticalmonsters.api.helper.VersionHelper;
@@ -47,8 +48,25 @@ public class TacticalMonstersLoader extends JavaPlugin {
         try {
             final ClassPath classPath = ClassPath.from(TacticalMonstersLoader.class.getClassLoader());
             for (final ClassPath.ClassInfo topLevelClass : classPath.getTopLevelClasses(packagePath)) {
+                final Class<?> clazz = Class.forName(topLevelClass.getName());
+
+                if (!MonsterAttack.class.isAssignableFrom(clazz)) {
+                    continue;
+                }
+
                 final Class<MonsterAttack <? extends Monster>> monsterAttackClazz = (Class<MonsterAttack <? extends Monster>>) Class.forName(topLevelClass.getName());
-                api.registerAttack(monsterAttackClazz);
+
+                boolean requiresManualRegistration = false;
+                for (final Class<?> interfaceClazz : monsterAttackClazz.getInterfaces()) {
+                    if (interfaceClazz == ManualRegistration.class) {
+                        requiresManualRegistration = true;
+                        break;
+                    }
+                }
+
+                if (!requiresManualRegistration) {
+                    api.registerAttack(monsterAttackClazz);
+                }
             }
         } catch (Exception exception) {
             exception.printStackTrace();

@@ -7,7 +7,7 @@ import org.bukkit.entity.Zombie;
 
 import java.util.Random;
 
-public class TemplateAttack extends MonsterAttack<Zombie> {
+public class TemplateAttack extends MonsterAttack<Zombie> implements ManualRegistration {
 
     public TemplateAttack(final TacticalMonstersAPI api, final Random random) {
         super(EntityType.ZOMBIE, api, random);
