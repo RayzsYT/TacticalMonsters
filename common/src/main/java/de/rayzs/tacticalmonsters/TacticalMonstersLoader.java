@@ -3,7 +3,9 @@ package de.rayzs.tacticalmonsters;
 import de.rayzs.tacticalmonsters.api.TacticalMonsters;
 import de.rayzs.tacticalmonsters.api.helper.VersionHelper;
 import de.rayzs.tacticalmonsters.attacks.SkeletonAttack;
+import de.rayzs.tacticalmonsters.attacks.SpiderAttack;
 import de.rayzs.tacticalmonsters.attacks.WitherSkeletonAttack;
+import de.rayzs.tacticalmonsters.attacks.ZombieAttack;
 import de.rayzs.tacticalmonsters.impl.TacticalMonstersImpl;
 import de.rayzs.tacticalmonsters.listener.MonsterHandler;
 import org.bukkit.entity.EntityType;
@@ -36,9 +38,15 @@ public class TacticalMonstersLoader extends JavaPlugin {
 
         api.registerAttack(EntityType.WITHER_SKELETON, WitherSkeletonAttack.class);
         api.registerAttack(EntityType.SKELETON, SkeletonAttack.class);
+        api.registerAttack(EntityType.ZOMBIE, ZombieAttack.class);
+        api.registerAttack(EntityType.SPIDER, SpiderAttack.class);
 
 
-        getLogger().info("Successfully loaded " + api.getRegisteredAttacks().size() + " monster attacks. (" + (System.currentTimeMillis() - startTime) + "ms)");
+        getLogger().info("Successfully loaded "
+                + api.getRegisteredAttacks().size()
+                + " monster attacks. ("
+                + (System.currentTimeMillis() - startTime) + "ms)"
+        );
     }
 
     @Override
