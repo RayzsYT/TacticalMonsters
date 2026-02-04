@@ -72,6 +72,11 @@ public class TacticalMonstersImpl implements TacticalMonstersAPI {
     }
 
     @Override
+    public Set<MonsterAttack<? extends Monster>> getRegisteredAttacks() {
+        return Collections.unmodifiableSet(this.attacks);
+    }
+
+    @Override
     public void unregisterAttack(Class<? extends MonsterAttack<?>> attackClazz) {
         this.attacks.removeIf(attack -> {
             if (attack.getClass().equals(attackClazz)) {

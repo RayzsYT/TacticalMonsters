@@ -1,6 +1,7 @@
 package de.rayzs.tacticalmonsters;
 
 import de.rayzs.tacticalmonsters.api.TacticalMonsters;
+import de.rayzs.tacticalmonsters.api.helper.VersionHelper;
 import de.rayzs.tacticalmonsters.attacks.SkeletonAttack;
 import de.rayzs.tacticalmonsters.attacks.WitherSkeletonAttack;
 import de.rayzs.tacticalmonsters.impl.TacticalMonstersImpl;
@@ -17,6 +18,14 @@ public class TacticalMonstersLoader extends JavaPlugin {
 
     @Override
     public void onEnable() {
+
+        if (!VersionHelper.isSupported()) {
+            getLogger().warning("This Minecraft version is not supported! (" + VersionHelper.MIN_SUPPORTED_VERSION.name() + " and above only!)");
+            return;
+        }
+
+        final long startTime = System.currentTimeMillis();
+
         api = new TacticalMonstersImpl(this);
         TacticalMonsters.setInstance(api);
 
@@ -27,6 +36,9 @@ public class TacticalMonstersLoader extends JavaPlugin {
 
         api.registerAttack(EntityType.WITHER_SKELETON, WitherSkeletonAttack.class);
         api.registerAttack(EntityType.SKELETON, SkeletonAttack.class);
+
+
+        getLogger().info("Successfully loaded " + api.getRegisteredAttacks().size() + " monster attacks. (" + (System.currentTimeMillis() - startTime) + "ms)");
     }
 
     @Override
