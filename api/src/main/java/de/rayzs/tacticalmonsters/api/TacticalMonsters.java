@@ -10,7 +10,7 @@ public class TacticalMonsters {
      * @return The current TacticalMonstersAPI instance.
      * @throws IllegalStateException If TacticalMonsters isn't initialized yet.
      */
-    public static TacticalMonstersAPI get() throws IllegalStateException {
+    public static TacticalMonstersAPI get() {
         if (instance == null) {
             throw new IllegalStateException("TacticalMonsters isn't initialized yet!");
         }
