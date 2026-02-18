@@ -3,6 +3,19 @@ package de.rayzs.tacticalmonsters.api.scheduler;
 public class SchedulerTask {
 
     private boolean stopped = false;
+    private Runnable stopAction = null;
+
+    /**
+     * Sets a runnable to be executed when the stop method is called.
+     *
+     * @param stopAction The runnable.
+     */
+    public void setStopAction(final Runnable stopAction) {
+        if (this.stopAction == null) {
+            this.stopAction = stopAction;
+        }
+    }
+
 
     /**
      * Says if the scheduler task is still running or not.
@@ -14,9 +27,17 @@ public class SchedulerTask {
     }
 
     /**
-     * Stops the scheduler task.
+     * Stops the scheduler task and runs the stop action if it exists.
      */
     public void stop() {
+        if (this.stopped) {
+            return;
+        }
+
         this.stopped = true;
+
+        if (this.stopAction != null) {
+            this.stopAction.run();
+        }
     }
 }
