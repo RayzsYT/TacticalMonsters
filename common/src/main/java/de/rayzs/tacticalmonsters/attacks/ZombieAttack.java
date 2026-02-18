@@ -23,10 +23,10 @@ public class ZombieAttack extends MonsterAttack<Zombie> {
     }
 
 
-    private final boolean STOMP_ENABLED = get("attack.enabled", true);
-    private final int STOMP_CHANCE = get("attack.chance", 10);
-    private final double STOMP_RADIUS = get("attack.radius", 4.0);
-    private final double STOMP_DAMAGE = get("attack.damage", 4.0);
+    private final boolean STOMP_ENABLED = get("stomp.enabled", true);
+    private final int STOMP_CHANCE = get("stomp.chance", 10);
+    private final double STOMP_RADIUS = get("stomp.radius", 4.0);
+    private final double STOMP_DAMAGE = get("stomp.damage", 4.0);
 
     public boolean stompAttack(final Zombie monster, final Player player) {
         if (!STOMP_ENABLED || !shouldDo(STOMP_CHANCE) || monster.isInsideVehicle()) {
