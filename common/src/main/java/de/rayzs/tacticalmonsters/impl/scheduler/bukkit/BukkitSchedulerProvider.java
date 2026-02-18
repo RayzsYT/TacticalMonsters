@@ -15,6 +15,9 @@ public class BukkitSchedulerProvider implements SchedulerProvider {
         this.api = api;
     }
 
+
+    // Sync schedulers
+
     @Override
     public SchedulerTask createScheduler(Consumer<SchedulerTask> scheduler) {
         final SchedulerTask schedulerTask = new SchedulerTask();
@@ -71,6 +74,9 @@ public class BukkitSchedulerProvider implements SchedulerProvider {
 
         return schedulerTask;
     }
+
+
+    // Async schedulers
 
     @Override
     public SchedulerTask createAsyncScheduler(Consumer<SchedulerTask> scheduler) {

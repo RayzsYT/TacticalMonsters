@@ -19,31 +19,42 @@ public class TacticalMonstersLoader extends JavaPlugin {
     @Override
     public void onEnable() {
 
+        // Check if software version is supported.
         if (!VersionHelper.isSupported()) {
             getLogger().warning("This Minecraft version is not supported! (" + VersionHelper.MIN_SUPPORTED_VERSION.name() + " and above only!)");
             return;
         }
 
+        // Registers the API and its instance.
         api = new TacticalMonstersImpl(this);
         TacticalMonsters.setInstance(api);
 
 
+        // Registers the command(s).
         final PluginCommand pluginCommand = this.getCommand("tacticalmonstersreload");
         if (pluginCommand != null) {
             pluginCommand.setExecutor(new ReloadCommand(api));
             pluginCommand.setTabCompleter(new ReloadCommand(api));
         }
 
+        // Registers the event listeners.
         api.reload();
+
+        // Registers all monster attacks.
         registerAllClasses("de.rayzs.tacticalmonsters.attacks");
     }
 
     @Override
     public void onDisable() {
+        // Unload all listeners.
         HandlerList.unregisterAll(this);
+
+        // Unload all attacks.
         api.unregisterAllAttacks();
     }
 
+    // This method here registers all classes inside a certain package associated with the MonsterAttack class
+    // fully automatically, except for those inheriting from the ManualRegistration interface.
     private void registerAllClasses(final String packagePath) {
         try {
             final ClassPath classPath = ClassPath.from(TacticalMonstersLoader.class.getClassLoader());
