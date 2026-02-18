@@ -58,12 +58,18 @@ public class ZombieAttack extends MonsterAttack<Zombie> {
         final double goalY = originY + 4;
 
         pushTowards(monster, player.getLocation(), 1.0, 1);
+        monster.setInvulnerable(true);
 
 
         final AtomicBoolean reachedPoint = new AtomicBoolean(false);
         final AtomicDouble lastY = new AtomicDouble(originY);
 
         api.getSchedulerProvider().createScheduler(attackTask -> {
+
+            attackTask.setStopAction(() -> {
+                monster.setInvulnerable(false);
+            });
+
             if (monster.isDead() || monster.isSwimming()) {
                 attackTask.stop();
                 return;
