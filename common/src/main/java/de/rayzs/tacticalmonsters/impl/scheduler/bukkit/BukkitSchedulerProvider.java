@@ -3,6 +3,9 @@ package de.rayzs.tacticalmonsters.impl.scheduler.bukkit;
 import de.rayzs.tacticalmonsters.api.TacticalMonstersAPI;
 import de.rayzs.tacticalmonsters.api.scheduler.*;
 import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.function.Consumer;
 
 public class BukkitSchedulerProvider implements SchedulerProvider {
 
@@ -13,32 +16,116 @@ public class BukkitSchedulerProvider implements SchedulerProvider {
     }
 
     @Override
-    public SchedulerTask createScheduler(SchedulerTask scheduler) {
-        return new BukkitSchedulerTask(Bukkit.getScheduler().runTask(api.getPlugin(), scheduler).getTaskId());
+    public SchedulerTask createScheduler(Consumer<SchedulerTask> scheduler) {
+        final SchedulerTask schedulerTask = new SchedulerTask();
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (schedulerTask.isStopped()) {
+                    this.cancel();
+                    return;
+                }
+
+                scheduler.accept(schedulerTask);
+            }
+        }.runTask(api.getPlugin());
+
+        return schedulerTask;
     }
 
     @Override
-    public SchedulerTask createScheduler(SchedulerTask scheduler, long delay) {
-        return new BukkitSchedulerTask(Bukkit.getScheduler().runTaskLater(api.getPlugin(), scheduler, delay).getTaskId());
+    public SchedulerTask createScheduler(Consumer<SchedulerTask> scheduler, long delay) {
+        final SchedulerTask schedulerTask = new SchedulerTask();
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (schedulerTask.isStopped()) {
+                    this.cancel();
+                    return;
+                }
+
+                scheduler.accept(schedulerTask);
+            }
+        }.runTaskLater(api.getPlugin(), delay);
+
+        return schedulerTask;
     }
 
     @Override
-    public SchedulerTask createScheduler(SchedulerTask scheduler, long delay, long period) {
-        return new BukkitSchedulerTask(Bukkit.getScheduler().runTaskTimer(api.getPlugin(), scheduler, delay, period).getTaskId());
+    public SchedulerTask createScheduler(Consumer<SchedulerTask> scheduler, long delay, long period) {
+        final SchedulerTask schedulerTask = new SchedulerTask();
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (schedulerTask.isStopped()) {
+                    this.cancel();
+                    return;
+                }
+
+                scheduler.accept(schedulerTask);
+            }
+        }.runTaskTimer(api.getPlugin(), delay, period);
+
+        return schedulerTask;
     }
 
     @Override
-    public SchedulerTask createAsyncScheduler(SchedulerTask scheduler) {
-        return new BukkitSchedulerTask(Bukkit.getScheduler().runTaskAsynchronously(api.getPlugin(), scheduler).getTaskId());
+    public SchedulerTask createAsyncScheduler(Consumer<SchedulerTask> scheduler) {
+        final SchedulerTask schedulerTask = new SchedulerTask();
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (schedulerTask.isStopped()) {
+                    this.cancel();
+                    return;
+                }
+
+                scheduler.accept(schedulerTask);
+            }
+        }.runTaskAsynchronously(api.getPlugin());
+
+        return schedulerTask;
     }
 
     @Override
-    public SchedulerTask createAsyncScheduler(SchedulerTask scheduler, long delay) {
-        return new BukkitSchedulerTask(Bukkit.getScheduler().runTaskLaterAsynchronously(api.getPlugin(), scheduler, delay).getTaskId());
+    public SchedulerTask createAsyncScheduler(Consumer<SchedulerTask> scheduler, long delay) {
+        final SchedulerTask schedulerTask = new SchedulerTask();
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (schedulerTask.isStopped()) {
+                    this.cancel();
+                    return;
+                }
+
+                scheduler.accept(schedulerTask);
+            }
+        }.runTaskLaterAsynchronously(api.getPlugin(), delay);
+
+        return schedulerTask;
     }
 
     @Override
-    public SchedulerTask createAsyncScheduler(SchedulerTask scheduler, long delay, long period) {
-        return new BukkitSchedulerTask(Bukkit.getScheduler().runTaskTimerAsynchronously(api.getPlugin(), scheduler, delay, period).getTaskId());
+    public SchedulerTask createAsyncScheduler(Consumer<SchedulerTask> scheduler, long delay, long period) {
+        final SchedulerTask schedulerTask = new SchedulerTask();
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (schedulerTask.isStopped()) {
+                    this.cancel();
+                    return;
+                }
+
+                scheduler.accept(schedulerTask);
+            }
+        }.runTaskTimerAsynchronously(api.getPlugin(), delay, period);
+
+        return schedulerTask;
     }
 }

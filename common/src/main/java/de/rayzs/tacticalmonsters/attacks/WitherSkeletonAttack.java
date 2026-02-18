@@ -1,6 +1,5 @@
 package de.rayzs.tacticalmonsters.attacks;
 
-import de.rayzs.tacticalmonsters.api.scheduler.SchedulerTask;
 import de.rayzs.tacticalmonsters.api.attack.MonsterAttack;
 import de.rayzs.tacticalmonsters.api.TacticalMonstersAPI;
 import org.bukkit.util.Vector;
@@ -62,13 +61,10 @@ public class WitherSkeletonAttack extends MonsterAttack<WitherSkeleton> {
         monster.teleport(behind);
 
 
-
-        api.getSchedulerProvider().createScheduler(new SchedulerTask() {
-            @Override
-            public void run() {
-                player.showEntity(api.getPlugin(), monster);
-            }
+        api.getSchedulerProvider().createScheduler(task -> {
+            player.showEntity(api.getPlugin(), monster);
         }, 1);
+
 
         particle(behind, Color.BLACK,
                 3, 50,
@@ -118,53 +114,51 @@ public class WitherSkeletonAttack extends MonsterAttack<WitherSkeleton> {
                 0.3, 1, 0.3, 0.01
         );
 
-        api.getSchedulerProvider().createScheduler(new SchedulerTask() {
-            @Override
-            public void run() {
-                monster.setGlowing(false);
+        api.getSchedulerProvider().createScheduler(attackTask -> {
+            monster.setGlowing(false);
 
-                final Location startLocation = monster.getLocation().clone().add(0, 1, 0);
+            final Location startLocation = monster.getLocation().clone().add(0, 1, 0);
 
-                particle(startLocation, Particle.EXPLOSION_NORMAL, 1,
-                        0.4, 0.2, 0.4, 0.02
-                );
+            particle(startLocation, Particle.EXPLOSION_NORMAL, 1,
+                    0.4, 0.2, 0.4, 0.02
+            );
 
-                particle(startLocation, Color.RED,
-                        3, 50,
-                        2, 0.5, 2, 0.5
-                );
+            particle(startLocation, Color.RED,
+                    3, 50,
+                    2, 0.5, 2, 0.5
+            );
 
-                particle(startLocation, Color.BLACK, 3, 50,
-                        2, 0.5, 2, 0.5
-                );
+            particle(startLocation, Color.BLACK, 3, 50,
+                    2, 0.5, 2, 0.5
+            );
 
-                sound(
-                        monster.getLocation(),
-                        "ENTITY_WITHER_BREAK_BLOCK",
-                        1.0f,
-                        1.2f
-                );
+            sound(
+                    monster.getLocation(),
+                    "ENTITY_WITHER_BREAK_BLOCK",
+                    1.0f,
+                    1.2f
+            );
 
-                monster.getNearbyEntities(PUSH_RADIUS, PUSH_RADIUS, PUSH_RADIUS).forEach(entity -> {
-                    if (! (entity instanceof Player target)) {
-                        return;
-                    }
+            monster.getNearbyEntities(PUSH_RADIUS, PUSH_RADIUS, PUSH_RADIUS).forEach(entity -> {
+                if (! (entity instanceof Player target)) {
+                    return;
+                }
 
-                    if (shouldIgnorePlayer(target)) {
-                        return;
-                    }
+                if (shouldIgnorePlayer(target)) {
+                    return;
+                }
 
-                    if (!target.isBlocking()) {
-                        pushBack(target, monster.getLocation(), 1.8, 0.4);
-                        hurt(player, monster, 0.2f, PUSH_DAMAGE);
-                    } else {
-                        shieldBlockedSound(target);
+                if (!target.isBlocking()) {
+                    pushBack(target, monster.getLocation(), 1.8, 0.4);
+                    hurt(player, monster, 0.2f, PUSH_DAMAGE);
+                } else {
+                    shieldBlockedSound(target);
 
-                        pushBack(target, monster.getLocation(), 0.6, 0);
-                        hurt(player, monster, 0.2f, 0);
-                    }
-                });
-            }
+                    pushBack(target, monster.getLocation(), 0.6, 0);
+                    hurt(player, monster, 0.2f, 0);
+                }
+            });
+
         }, 10);
 
         return true;

@@ -1,8 +1,8 @@
 package de.rayzs.tacticalmonsters.impl;
 
 import de.rayzs.tacticalmonsters.impl.scheduler.bukkit.BukkitSchedulerProvider;
-import de.rayzs.tacticalmonsters.impl.scheduler.folia.FoliaSchedulerProvider;
 import de.rayzs.tacticalmonsters.impl.configuration.ConfigProviderImpl;
+import de.rayzs.tacticalmonsters.impl.scheduler.folia.FoliaSchedulerProvider;
 import de.rayzs.tacticalmonsters.listener.AntiWitherCheeseHandler;
 import de.rayzs.tacticalmonsters.api.configuration.ConfigProvider;
 import de.rayzs.tacticalmonsters.api.scheduler.SchedulerProvider;

@@ -1,6 +1,5 @@
 package de.rayzs.tacticalmonsters.attacks;
 
-import de.rayzs.tacticalmonsters.api.scheduler.SchedulerTask;
 import de.rayzs.tacticalmonsters.api.attack.MonsterAttack;
 import de.rayzs.tacticalmonsters.api.TacticalMonstersAPI;
 import org.bukkit.block.Block;
@@ -61,20 +60,15 @@ public class SpiderAttack extends MonsterAttack<Spider> {
         for (int i = 0; i < times; i++) {
             final Location location = locationsAroundPlayer.get(random.nextInt(maxAroundLocations));
 
-            api.getSchedulerProvider().createScheduler(new SchedulerTask() {
-
-                @Override
-                public void run() {
-
-                    if (player.isDead() || monster.isDead()) {
-                        stop();
-                        return;
-                    }
-
-                    location.getBlock().setType(org.bukkit.Material.COBWEB);
-
-                    sound(location, "ENTITY_SPIDER_AMBIENT", 0.6f, 0.1f * random.nextInt(10));
+            api.getSchedulerProvider().createScheduler(attackTask -> {
+                if (player.isDead() || monster.isDead()) {
+                    attackTask.stop();
+                    return;
                 }
+
+                location.getBlock().setType(org.bukkit.Material.COBWEB);
+
+                sound(location, "ENTITY_SPIDER_AMBIENT", 0.6f, 0.1f * random.nextInt(10));
             }, 2);
         }
 

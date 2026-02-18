@@ -1,12 +1,12 @@
 package de.rayzs.tacticalmonsters.attacks;
 
-import de.rayzs.tacticalmonsters.api.scheduler.SchedulerTask;
 import de.rayzs.tacticalmonsters.api.attack.MonsterAttack;
 import de.rayzs.tacticalmonsters.api.TacticalMonstersAPI;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.entity.*;
 import org.bukkit.*;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class PillagerAttack extends MonsterAttack<Pillager> implements ManualRegistration {
 
@@ -43,11 +43,9 @@ public class PillagerAttack extends MonsterAttack<Pillager> implements ManualReg
 
         monster.lookAt(player);
 
-        api.getSchedulerProvider().createScheduler(new SchedulerTask() {
-            @Override
-            public void run() {
+        api.getSchedulerProvider().createScheduler(attackTask -> {
                 if (monster.isDead()) {
-                    stop();
+                    attackTask.stop();
                     return;
                 }
 
@@ -68,62 +66,57 @@ public class PillagerAttack extends MonsterAttack<Pillager> implements ManualReg
 
                 pushTowards(rocketItem, player.getLocation().clone(), 1, 0);
 
-                api.getSchedulerProvider().createScheduler(new SchedulerTask() {
 
-                    int tick = 0;
+                final AtomicInteger tick = new AtomicInteger(0);
 
-                    @Override
-                    public void run() {
-                        if (tick > 100 || rocketItem.isDead() || rocketItem.isOnGround()) {
+                api.getSchedulerProvider().createScheduler(rocketTask -> {
+                    if (tick.get() > 100 || rocketItem.isDead() || rocketItem.isOnGround()) {
+                        rocketItem.remove();
+                        rocketTask.stop();
+
+                        return;
+                    }
+
+                    for (final Player nearbyPlayer : nearbyPlayers) {
+                        if (shouldIgnorePlayer(nearbyPlayer)) {
+                            continue;
+                        }
+
+                        if (rocketItem.getLocation().distance(nearbyPlayer.getLocation()) < 1.5) {
+                            sound(nearbyPlayer, nearbyPlayer.getLocation(), "ENTITY_DRAGON_FIREBALL_EXPLODE", 1, 0.5f);
+                            sound(nearbyPlayer, nearbyPlayer.getLocation(), "ENTITY_FIREWORK_ROCKET_BLAST", 1, 0.5f);
+
+                            particle(nearbyPlayer.getLocation(), Particle.EXPLOSION_LARGE, 1,
+                                    1, 1, 1, 0.02
+                            );
+
+                            particle(nearbyPlayer.getLocation(), Particle.FLAME, 10,
+                                    1, 1, 1, 0.1
+                            );
+
+                            particle(nearbyPlayer.getLocation(), Particle.SMOKE_LARGE, 10,
+                                    1, 1, 1, 0.1
+                            );
+
+                            if (nearbyPlayer.isBlocking()) {
+                                shieldBlockedSound(nearbyPlayer);
+                                hurt(nearbyPlayer, monster, 0.2f, 0);
+                                pushBack(nearbyPlayer, rocketItem.getLocation(), 0.3, 0);
+                            } else {
+                                pushBack(nearbyPlayer, rocketItem.getLocation(), 0.6, 0.25);
+                                hurt(nearbyPlayer, monster, 0.5f, EXPLOSIVE_PROJECTILE_DAMAGE);
+                            }
+
                             rocketItem.remove();
-                            stop();
+                            rocketTask.stop();
 
                             return;
                         }
 
-                        for (final Player nearbyPlayer : nearbyPlayers) {
-                            if (shouldIgnorePlayer(nearbyPlayer)) {
-                                continue;
-                            }
-
-                            if (rocketItem.getLocation().distance(nearbyPlayer.getLocation()) < 1.5) {
-                                sound(nearbyPlayer, nearbyPlayer.getLocation(), "ENTITY_DRAGON_FIREBALL_EXPLODE", 1, 0.5f);
-                                sound(nearbyPlayer, nearbyPlayer.getLocation(), "ENTITY_FIREWORK_ROCKET_BLAST", 1, 0.5f);
-
-                                particle(nearbyPlayer.getLocation(), Particle.EXPLOSION_LARGE, 1,
-                                        1, 1, 1, 0.02
-                                );
-
-                                particle(nearbyPlayer.getLocation(), Particle.FLAME, 10,
-                                        1, 1, 1, 0.1
-                                );
-
-                                particle(nearbyPlayer.getLocation(), Particle.SMOKE_LARGE, 10,
-                                        1, 1, 1, 0.1
-                                );
-
-                                if (nearbyPlayer.isBlocking()) {
-                                    shieldBlockedSound(nearbyPlayer);
-                                    hurt(nearbyPlayer, monster, 0.2f, 0);
-                                    pushBack(nearbyPlayer, rocketItem.getLocation(), 0.3, 0);
-                                } else {
-                                    pushBack(nearbyPlayer, rocketItem.getLocation(), 0.6, 0.25);
-                                    hurt(nearbyPlayer, monster, 0.5f, EXPLOSIVE_PROJECTILE_DAMAGE);
-                                }
-
-                                rocketItem.remove();
-                                stop();
-
-                                return;
-                            }
-
-                        }
-
-                        tick++;
                     }
-                }, 1, 1);
 
-            }
+                    tick.incrementAndGet();
+                }, 1, 1);
         }, 10);
 
         return true;

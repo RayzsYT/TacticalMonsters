@@ -1,6 +1,5 @@
 package de.rayzs.tacticalmonsters.attacks;
 
-import de.rayzs.tacticalmonsters.api.scheduler.SchedulerTask;
 import de.rayzs.tacticalmonsters.api.attack.MonsterAttack;
 import de.rayzs.tacticalmonsters.api.TacticalMonstersAPI;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -9,6 +8,7 @@ import org.bukkit.attribute.*;
 import org.bukkit.entity.*;
 import org.bukkit.*;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class SkeletonAttack extends MonsterAttack<Skeleton> {
 
@@ -56,44 +56,35 @@ public class SkeletonAttack extends MonsterAttack<Skeleton> {
 
         final AtomicBoolean running = new AtomicBoolean(true);
 
-        api.getSchedulerProvider().createScheduler(new SchedulerTask() {
-
-            @Override
-            public void run() {
-                if (monster.isDead() || !running.get()) {
-                    stop();
-                    return;
-                }
-
-                particle(monster.getLocation().clone().add(0, 1, 0),
-                        Color.WHITE, 1,10,
-                        0.2, 0.5, 0.2, 0.05
-                );
+        api.getSchedulerProvider().createScheduler(particleTask -> {
+            if (monster.isDead() || !running.get()) {
+                particleTask.stop();
+                return;
             }
+
+            particle(monster.getLocation().clone().add(0, 1, 0),
+                    Color.WHITE, 1,10,
+                    0.2, 0.5, 0.2, 0.05
+            );
         }, 1, 1);
 
-        api.getSchedulerProvider().createScheduler(new SchedulerTask() {
+        api.getSchedulerProvider().createScheduler(attackTask -> {
+            running.set(false);
 
-            @Override
-            public void run() {
-
-                running.set(false);
-
-                if (monster.isDead()) {
-                    return;
-                }
-
-                monster.getEquipment().setItemInMainHand(
-                        monster.getEquipment().getItemInOffHand()
-                );
-
-                monster.getEquipment().setItemInOffHand(
-                        null
-                );
-
-                attribute.setBaseValue(defaultValue);
-                monster.setGlowing(false);
+            if (monster.isDead()) {
+                return;
             }
+
+            monster.getEquipment().setItemInMainHand(
+                    monster.getEquipment().getItemInOffHand()
+            );
+
+            monster.getEquipment().setItemInOffHand(
+                    null
+            );
+
+            attribute.setBaseValue(defaultValue);
+            monster.setGlowing(false);
         }, 20 * 3);
 
         return true;
@@ -120,47 +111,42 @@ public class SkeletonAttack extends MonsterAttack<Skeleton> {
 
         pushTowards(boneItem, direction, 1, 0);
 
-        api.getSchedulerProvider().createScheduler(new SchedulerTask() {
+        final AtomicInteger tick = new AtomicInteger(0);
+        api.getSchedulerProvider().createScheduler(attackTask -> {
+            if (tick.get() > 100 || boneItem.isDead() || boneItem.isOnGround()) {
+                boneItem.remove();
 
-            int tick = 0;
+                attackTask.stop();
+                return;
+            }
 
-            @Override
-            public void run() {
-                if (tick > 100 || boneItem.isDead() || boneItem.isOnGround()) {
+            for (final Player nearbyPlayer : nearbyPlayers) {
+                if (shouldIgnorePlayer(nearbyPlayer)) {
+                    continue;
+                }
+
+                if (boneItem.getLocation().distance(nearbyPlayer.getLocation()) < 1.5) {
+
+                    sound(nearbyPlayer, nearbyPlayer.getLocation(), "ENTITY_SKELETON_HURT", 1, 0.5f);
+
+                    if (nearbyPlayer.isBlocking()) {
+                        shieldBlockedSound(nearbyPlayer);
+                        hurt(nearbyPlayer, monster, 0.2f, 0);
+                        pushBack(nearbyPlayer, boneItem.getLocation(), 0.3, 0);
+                    } else {
+                        pushBack(nearbyPlayer, boneItem.getLocation(), 0.6, 0.25);
+                        hurt(nearbyPlayer, monster, 0.5f, BONE_THROW_DAMAGE);
+                    }
+
                     boneItem.remove();
+                    attackTask.stop();
 
-                    stop();
                     return;
                 }
 
-                for (final Player nearbyPlayer : nearbyPlayers) {
-                    if (shouldIgnorePlayer(nearbyPlayer)) {
-                        continue;
-                    }
-
-                    if (boneItem.getLocation().distance(nearbyPlayer.getLocation()) < 1.5) {
-
-                        sound(nearbyPlayer, nearbyPlayer.getLocation(), "ENTITY_SKELETON_HURT", 1, 0.5f);
-
-                        if (nearbyPlayer.isBlocking()) {
-                            shieldBlockedSound(nearbyPlayer);
-                            hurt(nearbyPlayer, monster, 0.2f, 0);
-                            pushBack(nearbyPlayer, boneItem.getLocation(), 0.3, 0);
-                        } else {
-                            pushBack(nearbyPlayer, boneItem.getLocation(), 0.6, 0.25);
-                            hurt(nearbyPlayer, monster, 0.5f, BONE_THROW_DAMAGE);
-                        }
-
-                        boneItem.remove();
-                        stop();
-
-                        return;
-                    }
-
-                }
-
-                tick++;
             }
+
+            tick.incrementAndGet();
         }, 1, 1);
 
         return true;

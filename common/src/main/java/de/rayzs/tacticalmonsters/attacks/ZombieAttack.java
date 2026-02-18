@@ -1,10 +1,12 @@
 package de.rayzs.tacticalmonsters.attacks;
 
-import de.rayzs.tacticalmonsters.api.scheduler.SchedulerTask;
+import com.google.common.util.concurrent.AtomicDouble;
 import de.rayzs.tacticalmonsters.api.attack.MonsterAttack;
 import de.rayzs.tacticalmonsters.api.TacticalMonstersAPI;
 import org.bukkit.entity.*;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import org.bukkit.*;
 
 public class ZombieAttack extends MonsterAttack<Zombie> {
@@ -57,103 +59,99 @@ public class ZombieAttack extends MonsterAttack<Zombie> {
 
         pushTowards(monster, player.getLocation(), 1.0, 2);
 
-        api.getSchedulerProvider().createScheduler(new SchedulerTask() {
 
-            private boolean reachedPoint = false;
-            private double lastY = originY;
+        final AtomicBoolean reachedPoint = new AtomicBoolean(false);
+        final AtomicDouble lastY = new AtomicDouble(originY);
 
-            @Override
-            public void run() {
+        api.getSchedulerProvider().createScheduler(attackTask -> {
+            if (monster.isDead() || monster.isSwimming()) {
+                attackTask.stop();
+                return;
+            }
 
-                if (monster.isDead() || monster.isSwimming()) {
-                    stop();
-                    return;
-                }
+            if (!reachedPoint.get()) {
 
-                if (!reachedPoint) {
+                if (monster.getY() >= goalY) {
+                    reachedPoint.set(true);
+                } else {
+                    final double currentY = monster.getY();
 
-                    if (monster.getY() >= goalY) {
-                        reachedPoint = true;
-                    } else {
-                        final double currentY = monster.getY();
-
-                        // Entity is falling without reaching goal y.
-                        if (currentY < lastY) {
-                            stop();
-                            return;
-                        }
-
-                        lastY = currentY;
-                    }
-
-                    return;
-                }
-
-                if (!monster.isOnGround()) {
-                    return;
-                }
-
-
-                final Location center = monster.getLocation().clone();
-
-                for (int x = -3; x <= 3; x++) {
-                    for (int z = -3; z <= 3; z++) {
-                        final Location location = center.clone().add(x, 0, z);
-                        location.setY(center.getY() + 0.25);
-
-                        particle(location, Particle.CLOUD, 1,
-                                0.5, 0.1, 0.5, 0.02
-                        );
-
-                        sound(location,
-                                "BLOCK_SAND_STEP",
-                                1.0f,
-                                1.0f
-                        );
-
-                        sound(location,
-                                "BLOCK_GRASS_STEP",
-                                1.0f,
-                                1.0f
-                        );
-
-                        sound(location,
-                                "BLOCK_STONE_STEP",
-                                1.0f,
-                                1.0f
-                        );
-
-                        sound(location,
-                                "BLOCK_ANVIL_STEP",
-                                1.0f,
-                                0.6f
-                        );
-                    }
-                }
-
-                monster.getNearbyEntities(STOMP_RADIUS, STOMP_RADIUS, STOMP_RADIUS).forEach(entity -> {
-                    if (! (entity instanceof LivingEntity livingEntity) || !entity.isOnGround()) {
+                    // Entity is falling without reaching goal y.
+                    if (currentY < lastY.get()) {
+                        attackTask.stop();
                         return;
                     }
 
-                    if (entity instanceof Player nearbyPlayer) {
-                        if (shouldIgnorePlayer(nearbyPlayer)) {
-                            return;
-                        }
+                    lastY.set(currentY);
+                }
 
-                        sound(nearbyPlayer, livingEntity.getLocation(),
-                                "ENTITY_ZOMBIE_ATTACK_WOODEN_DOOR",
-                                1.0f,
-                                0.8f
-                        );
+                return;
+            }
+
+            if (!monster.isOnGround()) {
+                return;
+            }
+
+
+            final Location center = monster.getLocation().clone();
+
+            for (int x = -3; x <= 3; x++) {
+                for (int z = -3; z <= 3; z++) {
+                    final Location location = center.clone().add(x, 0, z);
+                    location.setY(center.getY() + 0.25);
+
+                    particle(location, Particle.CLOUD, 1,
+                            0.5, 0.1, 0.5, 0.02
+                    );
+
+                    sound(location,
+                            "BLOCK_SAND_STEP",
+                            1.0f,
+                            1.0f
+                    );
+
+                    sound(location,
+                            "BLOCK_GRASS_STEP",
+                            1.0f,
+                            1.0f
+                    );
+
+                    sound(location,
+                            "BLOCK_STONE_STEP",
+                            1.0f,
+                            1.0f
+                    );
+
+                    sound(location,
+                            "BLOCK_ANVIL_STEP",
+                            1.0f,
+                            0.6f
+                    );
+                }
+            }
+
+            monster.getNearbyEntities(STOMP_RADIUS, STOMP_RADIUS, STOMP_RADIUS).forEach(entity -> {
+                if (! (entity instanceof LivingEntity livingEntity) || !entity.isOnGround()) {
+                    return;
+                }
+
+                if (entity instanceof Player nearbyPlayer) {
+                    if (shouldIgnorePlayer(nearbyPlayer)) {
+                        return;
                     }
 
-                    pushBack(livingEntity, monster.getLocation(), 0.8, 0.3);
-                    hurt(livingEntity, monster, 0.7f, STOMP_DAMAGE);
-                });
+                    sound(nearbyPlayer, livingEntity.getLocation(),
+                            "ENTITY_ZOMBIE_ATTACK_WOODEN_DOOR",
+                            1.0f,
+                            0.8f
+                    );
+                }
 
-                stop();
-            }
+                pushBack(livingEntity, monster.getLocation(), 0.8, 0.3);
+                hurt(livingEntity, monster, 0.7f, STOMP_DAMAGE);
+            });
+
+            attackTask.stop();
         }, 1, 1);
 
         return true;
