@@ -40,22 +40,18 @@ public abstract class MonsterAttack<T extends Monster> {
             return;
         }
 
-        this.scheduler = api.getSchedulerProvider().createScheduler(new SchedulerTask() {
+        this.scheduler = api.getSchedulerProvider().createScheduler(scheduler -> {
+            final Map<Monster, Player> monsters = api.getMonsters(type);
 
-            @Override
-            public void run() {
-                final Map<Monster, Player> monsters = api.getMonsters(type);
+            for (Map.Entry<Monster, Player> monsterPlayerEntry : monsters.entrySet()) {
+                final T monster = (T) monsterPlayerEntry.getKey();
+                final Player player = monsterPlayerEntry.getValue();
 
-                for (Map.Entry<Monster, Player> monsterPlayerEntry : monsters.entrySet()) {
-                    final T monster = (T) monsterPlayerEntry.getKey();
-                    final Player player = monsterPlayerEntry.getValue();
-
-                    if (shouldIgnorePlayer(player)) {
-                        continue;
-                    }
-
-                    attack(monster, player);
+                if (shouldIgnorePlayer(player)) {
+                    continue;
                 }
+
+                attack(monster, player);
             }
         }, 20, 20 * 6);
     }

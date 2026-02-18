@@ -25,7 +25,7 @@ public class BukkitSchedulerProvider implements SchedulerProvider {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (schedulerTask.isStopped()) {
+                if (!schedulerTask.isRunning()) {
                     this.cancel();
                     return;
                 }
@@ -44,7 +44,7 @@ public class BukkitSchedulerProvider implements SchedulerProvider {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (schedulerTask.isStopped()) {
+                if (!schedulerTask.isRunning()) {
                     this.cancel();
                     return;
                 }
@@ -63,7 +63,7 @@ public class BukkitSchedulerProvider implements SchedulerProvider {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (schedulerTask.isStopped()) {
+                if (!schedulerTask.isRunning()) {
                     this.cancel();
                     return;
                 }
@@ -85,7 +85,7 @@ public class BukkitSchedulerProvider implements SchedulerProvider {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (schedulerTask.isStopped()) {
+                if (!schedulerTask.isRunning()) {
                     this.cancel();
                     return;
                 }
@@ -104,7 +104,7 @@ public class BukkitSchedulerProvider implements SchedulerProvider {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (schedulerTask.isStopped()) {
+                if (!schedulerTask.isRunning()) {
                     this.cancel();
                     return;
                 }
@@ -123,7 +123,7 @@ public class BukkitSchedulerProvider implements SchedulerProvider {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (schedulerTask.isStopped()) {
+                if (!schedulerTask.isRunning()) {
                     this.cancel();
                     return;
                 }

@@ -9,6 +9,10 @@
       <set>
         <MavenCompilerTask>
           <option name="goal" value="clean" />
+          <option name="projectPath" value="$PROJECT_DIR$/api/pom.xml" />
+        </MavenCompilerTask>
+        <MavenCompilerTask>
+          <option name="goal" value="clean" />
           <option name="projectPath" value="$PROJECT_DIR$/common/pom.xml" />
         </MavenCompilerTask>
         <MavenCompilerTask>
@@ -19,6 +23,10 @@
     </option>
     <option name="afterCompileTasks">
       <set>
+        <MavenCompilerTask>
+          <option name="goal" value="install" />
+          <option name="projectPath" value="$PROJECT_DIR$/api/pom.xml" />
+        </MavenCompilerTask>
         <MavenCompilerTask>
           <option name="goal" value="install" />
           <option name="projectPath" value="$PROJECT_DIR$/common/pom.xml" />

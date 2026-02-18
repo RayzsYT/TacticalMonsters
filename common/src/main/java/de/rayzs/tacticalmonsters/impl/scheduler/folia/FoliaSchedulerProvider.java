@@ -24,7 +24,7 @@ public class FoliaSchedulerProvider implements SchedulerProvider {
         final SchedulerTask schedulerTask = new SchedulerTask();
 
         Bukkit.getGlobalRegionScheduler().run(api.getPlugin(), s -> {
-            if (schedulerTask.isStopped()) {
+            if (!schedulerTask.isRunning()) {
                 s.cancel();
                 return;
             }
@@ -40,7 +40,7 @@ public class FoliaSchedulerProvider implements SchedulerProvider {
         final SchedulerTask schedulerTask = new SchedulerTask();
 
         Bukkit.getGlobalRegionScheduler().runDelayed(api.getPlugin(), s -> {
-            if (schedulerTask.isStopped()) {
+            if (!schedulerTask.isRunning()) {
                 s.cancel();
                 return;
             }
@@ -56,7 +56,7 @@ public class FoliaSchedulerProvider implements SchedulerProvider {
         final SchedulerTask schedulerTask = new SchedulerTask();
 
         Bukkit.getGlobalRegionScheduler().runAtFixedRate(api.getPlugin(), s -> {
-            if (schedulerTask.isStopped()) {
+            if (!schedulerTask.isRunning()) {
                 s.cancel();
                 return;
             }
@@ -75,7 +75,7 @@ public class FoliaSchedulerProvider implements SchedulerProvider {
         final SchedulerTask schedulerTask = new SchedulerTask();
 
         Bukkit.getAsyncScheduler().runNow(api.getPlugin(), s -> {
-            if (schedulerTask.isStopped()) {
+            if (!schedulerTask.isRunning()) {
                 s.cancel();
                 return;
             }
@@ -91,7 +91,7 @@ public class FoliaSchedulerProvider implements SchedulerProvider {
         final SchedulerTask schedulerTask = new SchedulerTask();
 
         Bukkit.getAsyncScheduler().runDelayed(api.getPlugin(), s -> {
-            if (schedulerTask.isStopped()) {
+            if (!schedulerTask.isRunning()) {
                 s.cancel();
                 return;
             }
@@ -107,7 +107,7 @@ public class FoliaSchedulerProvider implements SchedulerProvider {
         final SchedulerTask schedulerTask = new SchedulerTask();
 
         Bukkit.getAsyncScheduler().runAtFixedRate(api.getPlugin(), s -> {
-            if (schedulerTask.isStopped()) {
+            if (!schedulerTask.isRunning()) {
                 s.cancel();
                 return;
             }
