@@ -5,12 +5,12 @@ public class SchedulerTask {
     private boolean stopped = false;
 
     /**
-     * Checks if the scheduler task is stopped.
+     * Says if the scheduler task is still running or not.
      *
-     * @return true if the scheduler task is stopped, false otherwise.
+     * @return true if the scheduler task is still running, false otherwise.
      */
-    public boolean isStopped() {
-        return stopped;
+    public boolean isRunning() {
+        return !stopped;
     }
 
     /**
