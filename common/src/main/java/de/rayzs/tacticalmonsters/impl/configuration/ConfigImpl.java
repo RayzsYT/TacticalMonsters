@@ -12,15 +12,9 @@ public class ConfigImpl implements Config {
     private File file;
     private YamlConfiguration configuration;
 
-    public ConfigImpl(final String fileName) {
-        this(null, fileName);
-    }
-
     public ConfigImpl(final String filePath, final String fileName) {
         this.fileName = fileName;
-
-        final String defaultPath = "plugins/TacticalMonsters";
-        this.filePath = defaultPath + (filePath == null ? "" : "/" + filePath);
+        this.filePath = filePath;
 
         load();
     }
