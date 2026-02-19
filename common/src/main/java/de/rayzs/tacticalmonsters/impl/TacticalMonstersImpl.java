@@ -121,21 +121,19 @@ public class TacticalMonstersImpl implements TacticalMonstersAPI {
         manager.registerEvents(new AntiWitherCheeseHandler(this), plugin);
 
 
-        if (getRegisteredAttacks().isEmpty()) {
+        final Set<MonsterAttack<? extends Monster>> registeredAttacks = getRegisteredAttacks();
+
+        if (registeredAttacks.isEmpty()) {
             return;
-        }
-
-
-        final HashSet<Class<MonsterAttack<? extends Monster>>> attackClasses = new HashSet<>();
-
-        for (MonsterAttack<? extends Monster> attack : getRegisteredAttacks()) {
-            final Class<MonsterAttack<? extends Monster>> attackClass = (Class<MonsterAttack<? extends Monster>>) attack.getClass();
-            attackClasses.add(attackClass);
         }
 
         unregisterAllAttacks();
 
-        attackClasses.forEach(this::registerAttack);
+        for (MonsterAttack<? extends Monster> attack : registeredAttacks) {
+            final Class<MonsterAttack<? extends Monster>> attackClass = (Class<MonsterAttack<? extends Monster>>) attack.getClass();
+            registerAttack(attackClass);
+        }
+
     }
 
     @Override
