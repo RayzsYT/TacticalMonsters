@@ -1,0 +1,13 @@
+# Prohibits the spawn and teleportation of iron golems
+# into the Nether.
+disable-iron-golems-in-nether: true
+
+# Prohibits to spawn the Wither outside from the Nether.
+wither-only-in-nether: true
+
+# Allow the Wither to break obsidian blocks to counter trapping.
+wither-break-obsidian: true
+
+# Max build height where the Wither can be spawned. Prevents
+# spawning the Wither inside the Bedrock ceiling.
+max-wither-spawn-height: 160

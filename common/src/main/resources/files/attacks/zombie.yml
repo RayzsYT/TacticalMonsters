@@ -1,0 +1,20 @@
+# Setting this to 'false' disables all attacks for this mob.
+enabled: true
+
+# Jumps in the air and creates a shockwave
+# once hits the ground, throwing all entities around
+# the zombie in the air while dealing damage as well.
+# Can be countered with a shield.
+stomp:
+  enabled: true
+
+  # Chances for this attack to appear.
+  # Default value: 10%
+  chance: 10
+
+  # Radius of entities affected by the shockwave.
+  radius: 4.0
+
+  # Damage entities receives that get
+  # directly hit by the attack.
+  damage: 4.0

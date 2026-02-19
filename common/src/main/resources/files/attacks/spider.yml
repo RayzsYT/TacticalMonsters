@@ -1,0 +1,16 @@
+# Setting this to 'false' disables all attacks for this mob.
+enabled: true
+
+# If the spider is within distance, it will
+# shoot webs around the player, trapping its
+# target.
+web:
+  enabled: true
+
+  # Chances for this attack to appear.
+  # Default value: 30%
+  chance: 30
+
+  # Distance between player and spider,
+  # for the spider to use it.
+  distance: 3

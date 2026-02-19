@@ -1,0 +1,24 @@
+# Setting this to 'false' disables all attacks for this mob.
+enabled: true
+
+# Temporary switches to a sword and runs
+# towards its target.
+sword:
+  enabled: true
+
+  # Chances for this attack to appear.
+  # Default value: 40%
+  chance: 40
+
+# Throws a bone dealing some extra damage.
+# Can be blocked with a shield.
+bone_throw:
+  enabled: true
+
+  # Chances for this attack to appear.
+  # Default value: 30%
+  chance: 30
+
+  # Damage entities receives that get
+  # directly hit by the attack.
+  damage: 2

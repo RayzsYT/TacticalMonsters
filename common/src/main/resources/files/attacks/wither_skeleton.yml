@@ -1,0 +1,27 @@
+# Setting this to 'false' disables all attacks for this mob.
+enabled: true
+
+# Teleports behind its target.
+shadow:
+  enabled: true
+
+  # Chances for this attack to appear.
+  # Default value: 30%
+  chance: 30
+
+# Creates a small shockwave around the wither
+# pushing all entities around it away.
+# The blast from it can be blocked with a shield.
+push:
+  enabled: true
+
+  # Chances for this attack to appear.
+  # Default value: 15%
+  chance: 15
+
+  # Radius of entities affected by the shockwave.
+  radius: 4
+
+  # Damage entities receives that get
+  # directly hit by the attack.
+  damage: 0.4
