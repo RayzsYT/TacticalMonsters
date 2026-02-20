@@ -30,6 +30,7 @@ public abstract class MonsterAttack<T extends Monster> {
 
         this.api = api;
         this.config = api.getConfigProvider().getOrCreate("monsters", type.name().toLowerCase());
+        this.config.reload();
 
         this.random = random;
 
