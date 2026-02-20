@@ -71,14 +71,14 @@ public class WitherSkeletonAttack extends MonsterAttack<WitherSkeleton> {
                 0.3, 1, 0.3, 0.01
         );
 
-        monster.getWorld().playSound(
+        sound(
                 monster.getLocation(),
                 "ENTITY_ENDERMAN_TELEPORT",
                 0.8f,
                 0.6f
         );
 
-        monster.getWorld().playSound(
+        sound(
                 monster.getLocation(),
                 "ENTITY_GENERIC_EXTINGUISH_FIRE",
                 0.8f,
