@@ -3,8 +3,13 @@ package de.rayzs.tacticalmonsters.attacks;
 import de.rayzs.tacticalmonsters.api.attack.MonsterAttack;
 import de.rayzs.tacticalmonsters.api.TacticalMonstersAPI;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 import java.util.Random;
+
+/**
+ * Template attack class.
+ */
 
 public class TemplateAttack extends MonsterAttack<Zombie> implements ManualRegistration {
 
@@ -13,9 +18,7 @@ public class TemplateAttack extends MonsterAttack<Zombie> implements ManualRegis
     }
 
     @Override
-    public void attack(Zombie monster, org.bukkit.entity.Player player) {
-
-    }
+    public void attack(Zombie monster, Player player) { }
 
 
 
