@@ -151,9 +151,18 @@ public class ZombieAttack extends MonsterAttack<Zombie> {
                             1.0f,
                             0.8f
                     );
+
+                    if (nearbyPlayer.isBlocking()) {
+                        shieldBlockedSound(nearbyPlayer);
+
+                        pushBack(livingEntity, monster.getLocation(), 0.1, 0.3);
+                        hurt(livingEntity, monster, 0.7f, 0);
+
+                        return;
+                    }
                 }
 
-                pushBack(livingEntity, monster.getLocation(), 0.8, 0.3);
+                pushBack(livingEntity, monster.getLocation(), 0.8, 0.6);
                 hurt(livingEntity, monster, 0.7f, STOMP_DAMAGE);
             });
 
